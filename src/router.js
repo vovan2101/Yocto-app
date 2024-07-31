@@ -8,6 +8,7 @@ import './style.css'
 import FindInvestors from './views/FindInvestors.vue';
 import survey from './views/survey.vue';
 import sendForm from './views/sendForm.vue'
+import sendFormAirtable from './views/sendFormAirtable.vue'
 
 Vue.use(Router)
 Vue.use(Meta)
@@ -34,6 +35,12 @@ export default new Router({
       path: '/send-form',
       name: 'sendForm',
       component: sendForm,
+    },
+
+    {
+      path: '/airtable-form',
+      name: 'sendFormAirtable',
+      component: sendFormAirtable
     },
 
     {
