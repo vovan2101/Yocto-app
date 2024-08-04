@@ -1,6 +1,11 @@
 <template>
   <div class="outer-container">
+    <transition name="fade" mode="out-in">
+      <div v-if="currentStep > 1" class="fixed-title">1 → First let's start with the basics</div>
+    </transition>
     <div ref="steps">
+      <transition name="fade" mode="out-in">
+        <div :key="currentStep">
       <div v-if="currentStep === 1">
         <div class="header-container">
           <p class="step-indicator">1 →</p>
@@ -47,18 +52,18 @@
           <h2>What is your relationship to the company?*</h2>
         </div>
         <div class="radio-group">
-        <div>
-          <input type="radio" id="founder" value="Founder" v-model="formData.relationship" required @change="checkOtherRelationship" />
-          <label for="founder">Founder</label>
-        </div>
-        <div>
-          <input type="radio" id="other" value="Other" v-model="formData.relationship" required @change="checkOtherRelationship" />
-          <label for="other">Other</label>
-          <div v-if="formData.relationship === 'Other'">
-            <input class="input-field" v-model="formData.other_relationship" placeholder="Please specify" required />
+          <div>
+            <input type="radio" id="founder" value="Founder" v-model="formData.relationship" required @change="checkOtherRelationship" />
+            <label for="founder">Founder</label>
+          </div>
+          <div>
+            <input type="radio" id="other" value="Other" v-model="formData.relationship" required @change="checkOtherRelationship" />
+            <label for="other">Other</label>
+            <div v-if="formData.relationship === 'Other'">
+              <input class="input-field" v-model="formData.other_relationship" placeholder="Please specify" required />
+            </div>
           </div>
         </div>
-      </div>
         <div class="button-container">
           <button class="button" @click="nextStep">Next</button>
           <p class="enter-text">press Enter ↵</p>
@@ -89,6 +94,17 @@
       <div v-if="currentStep === 7">
         <div class="header-container">
           <p class="step-indicator">f.</p>
+          <h2>In 2-3 sentences, why you / your team are awesome.*</h2>
+        </div>
+        <textarea class="input-field" placeholder="What does your company do?*" v-model="formData.team_description" required></textarea>
+        <div class="button-container">
+          <button class="button" @click="nextStep">Next</button>
+          <p class="enter-text">press Enter ↵</p>
+        </div>
+      </div>
+      <div v-if="currentStep === 8">
+        <div class="header-container">
+          <p class="step-indicator">g.</p>
           <h2>What industry is your company in?*</h2>
         </div>
         <select class="input-field" v-model="formData.industry" required>
@@ -116,9 +132,9 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 8">
+      <div v-if="currentStep === 9">
         <div class="header-container">
-          <p class="step-indicator">g.</p>
+          <p class="step-indicator">h.</p>
           <h2>What is your company website?</h2>
         </div>
         <input class="input-field" type="url" placeholder="Company website" v-model="formData.company_website" />
@@ -127,9 +143,9 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 9">
+      <div v-if="currentStep === 10">
         <div class="header-container">
-          <p class="step-indicator">h.</p>
+          <p class="step-indicator">i.</p>
           <h2>Add a link to your pitch deck*</h2>
         </div>
         <input class="input-field" type="url" placeholder="Pitch deck link*" v-model="formData.pitch_deck" required />
@@ -138,9 +154,9 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 10">
+      <div v-if="currentStep === 11">
         <div class="header-container">
-          <p class="step-indicator">i.</p>
+          <p class="step-indicator">j.</p>
           <h2>Where is your company headquartered?*</h2>
         </div>
         <select class="input-field" v-model="formData.headquartered" required>
@@ -152,10 +168,10 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 11">
+      <div v-if="currentStep === 12">
         <div class="header-container">
-          <p class="step-indicator">j.</p>
-          <h2>What country do you currently operate in?*</h2>
+          <p class="step-indicator">k.</p>
+          <h2>Where are you located? (City, State, Country)*</h2>
         </div>
         <input class="input-field" placeholder="Operating country*" v-model="formData.operating_country" required />
         <div class="button-container">
@@ -163,9 +179,9 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 12">
+      <div v-if="currentStep === 13">
         <div class="header-container">
-          <p class="step-indicator">k.</p>
+          <p class="step-indicator">l.</p>
           <h2>What is the current or intended legal structure of the company?*</h2>
         </div>
         <div class="checkbox-group">
@@ -201,15 +217,11 @@
         <div class="button-container">
           <button class="button" @click="nextStep">Next</button>
           <p class="enter-text">press Enter ↵</p>
-    </div>
-    <div class="nav-buttons">
-      <button class="nav-button" :disabled="currentStep === 1" @click="prevStep">↑</button>
-      <button class="nav-button" @click="nextStep">↓</button>
-    </div>
-  </div>
-      <div v-if="currentStep === 13">
+        </div>
+      </div>
+      <div v-if="currentStep === 14">
         <div class="header-container">
-          <p class="step-indicator">l.</p>
+          <p class="step-indicator">m.</p>
           <h2>What round are you raising?*</h2>
         </div>
         <select class="input-field" v-model="formData.raising_round" required>
@@ -225,9 +237,9 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 14">
+      <div v-if="currentStep === 15">
         <div class="header-container">
-          <p class="step-indicator">m.</p>
+          <p class="step-indicator">n.</p>
           <h2>How much are you raising? (in USD)*</h2>
         </div>
         <input class="input-field" type="text" placeholder="Raising amount*" v-model="formData.raising_amount" required />
@@ -236,9 +248,9 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 15">
+      <div v-if="currentStep === 16">
         <div class="header-container">
-          <p class="step-indicator">n.</p>
+          <p class="step-indicator">o.</p>
           <h2>What is your pre-money valuation? (in USD)</h2>
         </div>
         <input class="input-field" type="text" placeholder="Pre-money valuation" v-model="formData.pre_money_valuation" />
@@ -247,23 +259,12 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 16">
-        <div class="header-container">
-          <p class="step-indicator">o.</p>
-          <h2>Founder LinkedIn</h2>
-        </div>
-        <input class="input-field" type="url" placeholder="LinkedIn profile" v-model="formData.ceo_linkedin" />
-        <div class="button-container">
-          <button class="button" @click="nextStep">Next</button>
-          <p class="enter-text">press Enter ↵</p>
-        </div>
-      </div>
       <div v-if="currentStep === 17">
         <div class="header-container">
           <p class="step-indicator">p.</p>
-          <h2>One-line Description</h2>
+          <h2>Founder LinkedIn</h2>
         </div>
-        <textarea class="input-field" placeholder="One-line description" v-model="formData.one_line_description"></textarea>
+        <input class="input-field" type="url" placeholder="LinkedIn profile" v-model="formData.linkedin_profiles" />
         <div class="button-container">
           <button class="button" @click="nextStep">Next</button>
           <p class="enter-text">press Enter ↵</p>
@@ -272,17 +273,64 @@
       <div v-if="currentStep === 18">
         <div class="header-container">
           <p class="step-indicator">q.</p>
-          <h2>Video pitch URL (optional)</h2>
+          <h2>Your team's LinkedIn profiles.*</h2>
         </div>
-        <input class="input-field" type="url" placeholder="Video pitch URL" v-model="formData.founder_video" />
+        <input class="input-field" type="url" placeholder="LinkedIn profile" v-model="formData.ceo_linkedin" />
         <div class="button-container">
-          <button class="button" @click="submitForm">Send</button>
+          <button class="button" @click="nextStep">Next</button>
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
+      <div v-if="currentStep === 19">
+        <div class="header-container">
+          <p class="step-indicator">r.</p>
+          <h2>One-line Description</h2>
+        </div>
+        <textarea class="input-field" placeholder="One-line description" v-model="formData.one_line_description"></textarea>
+        <div class="button-container">
+          <button class="button" @click="nextStep">Next</button>
+          <p class="enter-text">press Enter ↵</p>
+        </div>
+      </div>
+      <div v-if="currentStep === 20">
+        <div class="header-container">
+          <p class="step-indicator">s.</p>
+          <h2>Video pitch URL</h2>
+        </div>
+        <input class="input-field" type="url" placeholder="Video pitch URL" v-model="formData.founder_video_url" />
+        <div class="button-container">
+          <button class="button" @click="nextStep">Next</button>
+          <p class="enter-text">press Enter ↵</p>
+        </div>
+      </div>
+      <div v-if="currentStep === 21">
+      <div class="header-container">
+        <p class="step-indicator">t.</p>
+        <h2>Pitch deck file</h2>
+      </div>
+      <input class="input-field" type="file" @change="handlePitchDeckUpload" />
+      <div class="button-container">
+        <button class="button" @click="nextStep">Next</button>
+        <p class="enter-text">press Enter ↵</p>
+      </div>
+    </div>
+      <div v-if="currentStep === 22">
+      <div class="header-container">
+        <p class="step-indicator">u.</p>
+        <h2>Upload short video about team and the company</h2>
+      </div>
+      <input class="input-field" type="file" @change="handleVideoUpload" />
+      <div class="button-container">
+        <button class="button" @click="submitForm">Send</button>
+        <p class="enter-text">press Enter ↵</p>
+      </div>
+    </div>
+
 
       <p v-if="successMessage" class="success-message">{{ successMessage }}</p>
       <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+    </div>
+    </transition>
     </div>
     <div class="nav-buttons">
       <button class="nav-button" :disabled="currentStep === 1" @click="prevStep">↑</button>
@@ -291,12 +339,12 @@
   </div>
 </template>
 
-
 <script>
 export default {
   data() {
     return {
       currentStep: 1,
+      showTitle: false,
       formData: {
         first_name: '',
         last_name: '',
@@ -305,6 +353,7 @@ export default {
         other_relationship: '',
         company_name: '',
         company_description: '',
+        team_description: '',
         industry: '',
         company_website: '',
         pitch_deck: '',
@@ -315,8 +364,11 @@ export default {
         raising_amount: '',
         pre_money_valuation: '',
         ceo_linkedin: '',
+        linkedin_profiles: '',
         one_line_description: '',
-        founder_video: ''
+        founder_video_url: '',
+        founder_video_file: null,
+        pitch_deck_file: null,
       },
       successMessage: '',
       errorMessage: ''
@@ -328,19 +380,37 @@ export default {
         this.formData.other_relationship = '';
       }
     },
+    handleVideoUpload(event) {
+      const file = event.target.files[0];
+      this.formData.founder_video_file = file;
+    },
+    handlePitchDeckUpload(event) {
+      const file = event.target.files[0];
+      this.formData.pitch_deck_file = file;
+    },
     nextStep() {
-      this.currentStep++;
-      this.scrollToCurrentStep();
+      if (this.currentStep < 22) {
+        this.currentStep++;
+        this.scrollToCurrentStep();
+        if (this.currentStep !== 1) {
+          this.showTitle = true;
+        }
+      }
     },
     prevStep() {
-      this.currentStep--;
-      this.scrollToCurrentStep();
+      if (this.currentStep > 1) {
+        this.currentStep--;
+        this.scrollToCurrentStep();
+      }
     },
     scrollToCurrentStep() {
       this.$nextTick(() => {
         const stepElement = this.$refs.steps;
         if (stepElement) {
-          stepElement.scrollIntoView({ behavior: 'smooth' });
+          stepElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
         }
       });
     },
@@ -352,12 +422,14 @@ export default {
       }
 
       try {
+        const formData = new FormData();
+        for (const key in this.formData) {
+          formData.append(key, this.formData[key]);
+        }
+
         const response = await fetch('http://localhost:3002/send-forms', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(this.formData)
+          body: formData
         });
 
         if (response.ok) {
@@ -370,69 +442,22 @@ export default {
       } catch (error) {
         this.errorMessage = 'An error occurred while submitting the form.';
         this.successMessage = '';
+      }
+    },
+    handleKeydown(event) {
+      if (event.key === 'Enter') {
+        this.nextStep();
       }
     }
   },
   mounted() {
+    setTimeout(() => {
+      this.showTitle = true;
+    }, 500); // Задержка для плавного появления заголовка
     document.addEventListener('keydown', this.handleKeydown);
   },
   beforeDestroy() {
     document.removeEventListener('keydown', this.handleKeydown);
-  },
-  methods: {
-  handleKeydown(event) {
-    if (event.key === 'Enter') {
-      this.nextStep();
-    }
-  },
-  nextStep() {
-    if (this.currentStep < 18) { // Убедиться, что текущий шаг меньше максимального числа шагов
-      this.currentStep++;
-      this.scrollToCurrentStep();
-    }
-  },
-  prevStep() {
-    if (this.currentStep > 1) { // Убедиться, что текущий шаг больше первого шага
-      this.currentStep--;
-      this.scrollToCurrentStep();
-    }
-  },
-  scrollToCurrentStep() {
-    this.$nextTick(() => {
-      const stepElement = this.$refs.steps;
-      if (stepElement) {
-        stepElement.scrollIntoView({ behavior: 'smooth' });
-      }
-    });
-  },
-    async submitForm() {
-      if (this.formData.relationship === 'Other' && !this.formData.other_relationship) {
-        this.errorMessage = 'Please specify your relationship to the company.';
-        this.successMessage = '';
-        return;
-      }
-
-      try {
-        const response = await fetch('http://localhost:3002/send-forms', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(this.formData)
-        });
-
-        if (response.ok) {
-          this.successMessage = 'Form submitted successfully!';
-          this.errorMessage = '';
-        } else {
-          this.errorMessage = 'Failed to submit form.';
-          this.successMessage = '';
-        }
-      } catch (error) {
-        this.errorMessage = 'An error occurred while submitting the form.';
-        this.successMessage = '';
-      }
-    }
   }
 };
 </script>
@@ -492,7 +517,18 @@ p {
   border-bottom: 2px solid #333;
   outline: none;
 }
-
+.fixed-title {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgb(255, 207, 119);
+  color: #333;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 1.5em;
+  z-index: 1;
+}
 
 
 .button-container {
@@ -575,4 +611,13 @@ button:focus {
 .radio-group label {
   margin-left: 8px; 
 }
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.35s ease;
+}
+
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0;
+}
+
 </style>
