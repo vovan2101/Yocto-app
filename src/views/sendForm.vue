@@ -111,6 +111,25 @@
           <option value="AdTech">AdTech</option>
           <option value="EdTech">EdTech</option>
           <option value="AI / Machine Learning">AI / Machine Learning</option>
+          <option value="AR / VR">AR / VR</option>
+          <option value="Biotech">Biotech</option>
+          <option value="Blockchain">Blockchain</option>
+          <option value="Blockchain">Climate</option>
+          <option value="Marketplaces">Marketplaces</option>
+          <option value="Cyber Security">Cyber Security</option>
+          <option value="Developer Tools">Developer Tools</option>
+          <option value="Ecommerce Enablement">Ecommerce Enablement</option>
+          <option value="Enterprise">Enterprise</option>
+          <option value="Healthcare">Healthcare</option>
+          <option value="Industrial Manufacturing">Industrial Manufacturing</option>
+          <option value="Iot">Iot</option>
+          <option value="Longevity">Longevity</option>
+          <option value="Robotics">Robotics</option>
+          <option value="SMB SaaS">SMB SaaS</option>
+          <option value="Space Tech">Space Tech</option>
+          <option value="Supply Chain">Supply Chain</option>
+          <option value="Gaming">Gaming</option>
+          <option value="Mobility">Mobility</option>
           <option value="MarTech">MarTech</option>
           <option value="eCommerce">eCommerce</option>
           <option value="SaaS">SaaS</option>
@@ -264,7 +283,7 @@
           <p class="step-indicator">p.</p>
           <h2>Founder LinkedIn</h2>
         </div>
-        <input class="input-field" type="url" placeholder="LinkedIn profile" v-model="formData.linkedin_profiles" />
+        <input class="input-field" type="url" placeholder="LinkedIn profile" v-model="formData.ceo_linkedin" />
         <div class="button-container">
           <button class="button" @click="nextStep">Next</button>
           <p class="enter-text">press Enter ↵</p>
@@ -272,16 +291,27 @@
       </div>
       <div v-if="currentStep === 18">
         <div class="header-container">
-          <p class="step-indicator">q.</p>
-          <h2>Your team's LinkedIn profiles.*</h2>
+          <p class="step-indicator">p.</p>
+          <h2>CTO LinkedIn</h2>
         </div>
-        <input class="input-field" type="url" placeholder="LinkedIn profile" v-model="formData.ceo_linkedin" />
+        <input class="input-field" type="url" placeholder="LinkedIn profile" v-model="formData.cto_linkedin" />
         <div class="button-container">
           <button class="button" @click="nextStep">Next</button>
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
       <div v-if="currentStep === 19">
+        <div class="header-container">
+          <p class="step-indicator">q.</p>
+          <h2>Your team's LinkedIn profiles.*</h2>
+        </div>
+        <input class="input-field" type="url" placeholder="LinkedIn profile" v-model="formData.linkedin_profiles" />
+        <div class="button-container">
+          <button class="button" @click="nextStep">Next</button>
+          <p class="enter-text">press Enter ↵</p>
+        </div>
+      </div>
+      <div v-if="currentStep === 20">
         <div class="header-container">
           <p class="step-indicator">r.</p>
           <h2>One-line Description</h2>
@@ -292,10 +322,10 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 20">
+      <div v-if="currentStep === 21">
         <div class="header-container">
           <p class="step-indicator">s.</p>
-          <h2>Video pitch URL</h2>
+          <h2>Founder video URL</h2>
         </div>
         <input class="input-field" type="url" placeholder="Video pitch URL" v-model="formData.founder_video_url" />
         <div class="button-container">
@@ -303,7 +333,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 21">
+      <div v-if="currentStep === 22">
       <div class="header-container">
         <p class="step-indicator">t.</p>
         <h2>Pitch deck file</h2>
@@ -314,16 +344,60 @@
         <p class="enter-text">press Enter ↵</p>
       </div>
     </div>
-      <div v-if="currentStep === 22">
+      <div v-if="currentStep === 23">
       <div class="header-container">
         <p class="step-indicator">u.</p>
         <h2>Upload short video about team and the company</h2>
       </div>
       <input class="input-field" type="file" @change="handleVideoUpload" />
       <div class="button-container">
-        <button class="button" @click="submitForm">Send</button>
+        <button class="button" @click="nextStep">Next</button>
         <p class="enter-text">press Enter ↵</p>
       </div>
+    </div>
+    <div v-if="currentStep === 24">
+        <div class="header-container">
+          <p class="step-indicator">s.</p>
+          <h2>Vision</h2>
+        </div>
+        <input class="input-field" type="url" placeholder="Video pitch URL" v-model="formData.vision" />
+        <div class="button-container">
+          <button class="button" @click="nextStep">Next</button>
+          <p class="enter-text">press Enter ↵</p>
+        </div>
+      </div>
+      <div v-if="currentStep === 25">
+        <div class="header-container">
+          <p class="step-indicator">s.</p>
+          <h2>Where are you located?</h2>
+        </div>
+        <input class="input-field" type="url" placeholder="Video pitch URL" v-model="formData.specific_location" />
+        <div class="button-container">
+          <button class="button" @click="nextStep">Next</button>
+          <p class="enter-text">press Enter ↵</p>
+        </div>
+      </div>
+      <div v-if="currentStep === 26">
+        <div class="header-container">
+          <p class="step-indicator">s.</p>
+          <h2>How much capital do you want to raise now?</h2>
+        </div>
+        <input class="input-field" type="url" placeholder="Video pitch URL" v-model="formData.capital_to_raise" />
+        <div class="button-container">
+          <button class="button" @click="nextStep">Next</button>
+          <p class="enter-text">press Enter ↵</p>
+        </div>
+      </div>
+    <div v-if="currentStep === 27">
+    <div class="header-container">
+      <p class="step-indicator">u.</p>
+      <h2>Date Founded</h2>
+    </div>
+    <input class="input-field" type="date" v-model="formData.date_founded" />
+    <div class="button-container">
+      <button class="button" @click="submitForm">Send</button>
+      <p class="enter-text">press Enter ↵</p>
+    </div>
     </div>
 
 
@@ -364,11 +438,16 @@ export default {
         raising_amount: '',
         pre_money_valuation: '',
         ceo_linkedin: '',
+        cto_linkedin: '',
         linkedin_profiles: '',
         one_line_description: '',
         founder_video_url: '',
         founder_video_file: null,
         pitch_deck_file: null,
+        date_founded: '',
+        capital_to_raise: '',
+        specific_location: '',
+        vision: '',
       },
       successMessage: '',
       errorMessage: ''
@@ -389,7 +468,7 @@ export default {
       this.formData.pitch_deck_file = file;
     },
     nextStep() {
-      if (this.currentStep < 22) {
+      if (this.currentStep < 27) {
         this.currentStep++;
         this.scrollToCurrentStep();
         if (this.currentStep !== 1) {
