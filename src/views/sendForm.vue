@@ -103,54 +103,64 @@
         </div>
       </div>
       <div v-if="currentStep === 8">
-        <div class="header-container">
-          <p class="step-indicator">g.</p>
-          <h2>What industry is your company in?*</h2>
-        </div>
-        <select class="input-field" v-model="formData.industry" required>
-          <option value="AdTech">AdTech</option>
-          <option value="EdTech">EdTech</option>
-          <option value="AI / Machine Learning">AI / Machine Learning</option>
-          <option value="AR / VR">AR / VR</option>
-          <option value="Biotech">Biotech</option>
-          <option value="Blockchain">Blockchain</option>
-          <option value="Blockchain">Climate</option>
-          <option value="Marketplaces">Marketplaces</option>
-          <option value="Cyber Security">Cyber Security</option>
-          <option value="Developer Tools">Developer Tools</option>
-          <option value="Ecommerce Enablement">Ecommerce Enablement</option>
-          <option value="Enterprise">Enterprise</option>
-          <option value="Healthcare">Healthcare</option>
-          <option value="Industrial Manufacturing">Industrial Manufacturing</option>
-          <option value="Iot">Iot</option>
-          <option value="Longevity">Longevity</option>
-          <option value="Robotics">Robotics</option>
-          <option value="SMB SaaS">SMB SaaS</option>
-          <option value="Space Tech">Space Tech</option>
-          <option value="Supply Chain">Supply Chain</option>
-          <option value="Gaming">Gaming</option>
-          <option value="Mobility">Mobility</option>
-          <option value="MarTech">MarTech</option>
-          <option value="eCommerce">eCommerce</option>
-          <option value="SaaS">SaaS</option>
-          <option value="FinTech">FinTech</option>
-          <option value="Digital Health">Digital Health</option>
-          <option value="Hardware">Hardware</option>
-          <option value="HR Tech">HR Tech</option>
-          <option value="GovTech">GovTech</option>
-          <option value="Financial Tech">Financial Tech</option>
-          <option value="Property Tech">Property Tech</option>
-          <option value="Legal Tech">Legal Tech</option>
-          <option value="Consumer Tech">Consumer Tech</option>
-          <option value="B2B SaaS">B2B SaaS</option>
-          <option value="Consumer Goods">Consumer Goods</option>
-          <option value="Other">Other</option>
-        </select>
-        <div class="button-container">
-          <button class="button" @click="nextStep">Next</button>
-          <p class="enter-text">press Enter ↵</p>
-        </div>
-      </div>
+            <div class="header-container">
+              <p class="step-indicator">g.</p>
+              <h2>What industry is your company in?*</h2>
+            </div>
+            <select class="input-field" v-model="formData.industry" @change="checkIndustry" required>
+              <option value="AdTech">AdTech</option>
+              <option value="EdTech">EdTech</option>
+              <option value="AI / Machine Learning">AI / Machine Learning</option>
+              <option value="AR / VR">AR / VR</option>
+              <option value="Biotech">Biotech</option>
+              <option value="Blockchain">Blockchain</option>
+              <option value="Blockchain">Climate</option>
+              <option value="Marketplaces">Marketplaces</option>
+              <option value="B2B Marketplace">B2B Marketplace</option>
+              <option value="Cyber Security">Cyber Security</option>
+              <option value="Developer Tools">Developer Tools</option>
+              <option value="Ecommerce Enablement">Ecommerce Enablement</option>
+              <option value="Enterprise">Enterprise</option>
+              <option value="Healthcare">Healthcare</option>
+              <option value="Industrial Manufacturing">Industrial Manufacturing</option>
+              <option value="Iot">Iot</option>
+              <option value="Longevity">Longevity</option>
+              <option value="Robotics">Robotics</option>
+              <option value="SMB SaaS">SMB SaaS</option>
+              <option value="Space Tech">Space Tech</option>
+              <option value="Supply Chain">Supply Chain</option>
+              <option value="Gaming">Gaming</option>
+              <option value="Mobility">Mobility</option>
+              <option value="MarTech">MarTech</option>
+              <option value="eCommerce">eCommerce</option>
+              <option value="SaaS">SaaS</option>
+              <option value="FinTech">FinTech</option>
+              <option value="Digital Health">Digital Health</option>
+              <option value="Hardware">Hardware</option>
+              <option value="HR Tech">HR Tech</option>
+              <option value="GovTech">GovTech</option>
+              <option value="Property Tech">Property Tech</option>
+              <option value="Legal Tech">Legal Tech</option>
+              <option value="Consumer Tech">Consumer Tech</option>
+              <option value="B2B SaaS">B2B SaaS</option>
+              <option value="Consumer Goods">Consumer Goods</option>
+              <option value="Cloud Infrastructure">Cloud Infrastructure</option>
+              <option value="Vertical Saas">Vertical Saas</option>
+              <option value="Consumer">Consumer</option>
+              <option value="Other">Other</option>
+            </select>
+            <div v-if="formData.industry === 'FinTech'" class="input-field">
+              <label for="fintechType">Please specify:</label>
+              <select id="fintechType" v-model="formData.fintech_type">
+                <option value="B2B FinTech">B2B FinTech</option>
+                <option value="B2C FinTech">B2C FinTech</option>
+              </select>
+            </div>
+            <div class="button-container">
+              <button class="button" @click="nextStep">Next</button>
+              <p class="enter-text">press Enter ↵</p>
+            </div>
+          </div>
       <div v-if="currentStep === 9">
         <div class="header-container">
           <p class="step-indicator">h.</p>
@@ -179,8 +189,9 @@
           <h2>Where is your company headquartered?*</h2>
         </div>
         <select class="input-field" v-model="formData.headquartered" required>
-          <option value="North America">North America</option>
-          <option value="Outside of North America">Outside of North America</option>
+          <option value="US">US</option>
+          <option value="Canada/Mexico">Canada/Mexico</option>
+          <option value="International">International</option>
         </select>
         <div class="button-container">
           <button class="button" @click="nextStep">Next</button>
@@ -192,7 +203,7 @@
           <p class="step-indicator">k.</p>
           <h2>Where are you located? (City, State, Country)*</h2>
         </div>
-        <input class="input-field" placeholder="Operating country*" v-model="formData.operating_country" required />
+        <input class="input-field" placeholder="Where are you located?*" v-model="formData.specific_location" required />
         <div class="button-container">
           <button class="button" @click="nextStep">Next</button>
           <p class="enter-text">press Enter ↵</p>
@@ -243,7 +254,7 @@
           <p class="step-indicator">m.</p>
           <h2>What round are you raising?*</h2>
         </div>
-        <select class="input-field" v-model="formData.raising_round" required>
+        <select class="input-field" v-model="formData.raising_round" required @change="checkBeyondSeriesA">
           <option value="Pre-Seed">Pre-Seed</option>
           <option value="Pre-Seed extension">Pre-Seed extension</option>
           <option value="Seed">Seed</option>
@@ -251,6 +262,15 @@
           <option value="Series A">Series A</option>
           <option value="Beyond Series A">Beyond Series A</option>
         </select>
+        <div v-if="formData.raising_round === 'Beyond Series A'">
+        <div class="header-container">
+            <h2>Please specify</h2>
+        </div>
+        <select class="input-field" v-model="formData.beyond_series_a_round" required>
+            <option value="Series B">Series B</option>
+            <option value="Series C">Series C</option>
+        </select>
+        </div>
         <div class="button-container">
           <button class="button" @click="nextStep">Next</button>
           <p class="enter-text">press Enter ↵</p>
@@ -369,9 +389,9 @@
       <div v-if="currentStep === 25">
         <div class="header-container">
           <p class="step-indicator">s.</p>
-          <h2>Where are you located?</h2>
+          <h2>Operating_country</h2>
         </div>
-        <input class="input-field" type="url" placeholder="Video pitch URL" v-model="formData.specific_location" />
+        <input class="input-field" type="url" placeholder="Video pitch URL" v-model="formData.operating_country" />
         <div class="button-container">
           <button class="button" @click="nextStep">Next</button>
           <p class="enter-text">press Enter ↵</p>
@@ -435,6 +455,7 @@ export default {
         operating_country: '',
         legal_structure: [],
         raising_round: '',
+        beyond_series_a_round: '',
         raising_amount: '',
         pre_money_valuation: '',
         ceo_linkedin: '',
@@ -457,6 +478,16 @@ export default {
     checkOtherRelationship() {
       if (this.formData.relationship !== 'Other') {
         this.formData.other_relationship = '';
+      }
+    },
+    checkIndustry() {
+      if (this.formData.industry !== 'FinTech') {
+        this.formData.fintech_type = '';
+      }
+    },
+    checkBeyondSeriesA() {
+      if (this.formData.raising_round !== 'Beyond Series A') {
+        this.formData.beyond_series_a_round = '';
       }
     },
     handleVideoUpload(event) {
