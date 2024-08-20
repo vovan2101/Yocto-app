@@ -5,24 +5,24 @@
         <span class="home-logo">Yocto</span>
         <div data-thq="thq-navbar-nav" data-role="Nav" class="home-desktop-menu">
           <nav data-thq="thq-navbar-nav-links" data-role="Nav" class="home-nav">
-            <router-link to="/" class="home-button button-clean button">Home</router-link>
-            <button class="home-button2 button-clean button">About</button>
+            <!-- <router-link to="/" class="home-button button-clean button">Home</router-link> -->
+            <!-- <button class="home-button2 button-clean button">About</button>
             <button class="home-button3 button-clean button">Pricing</button>
-            <button class="home-button4 button-clean button">Blog</button>
-            <router-link to="/send-form" class="home-button5 button-clean button">Send Forms</router-link>
-            <router-link to="/find-investors" class="home-button6 button-clean button">Find Investors</router-link>
+            <button class="home-button4 button-clean button">Blog</button> -->
+            <!-- <router-link to="/send-form" class="home-button5 button-clean button">Send Forms</router-link>
+            <router-link to="/find-investors" class="home-button6 button-clean button">Find Investors</router-link> -->
           </nav>
         </div>
         <div data-thq="thq-navbar-btn-group" class="home-btn-group">
-          <div class="home-socials">
+          <!-- <div class="home-socials">
             <button class="social button">
               <img alt="image" src="/Icons/twitter.svg" class="home-image" />
             </button>
             <button class="social button">
               <img alt="image" src="/Icons/discord.svg" class="home-image01" />
             </button>
-          </div>
-          <router-link to="/survey" class="button">Get Investments Now</router-link>
+          </div> -->
+          <router-link to="/send-form" class="button">Find Investors Now</router-link>
         </div>
         <div data-thq="thq-burger-menu" class="home-burger-menu">
           <button class="button home-button5">
@@ -50,19 +50,20 @@
               data-role="Nav"
               class="home-nav2"
             >
-              <router-link to="/" class="home-text">Home</router-link>
-              <span class="home-text01">About</span>
+              <!-- <router-link to="/" class="home-text">Home</router-link> -->
+              <router-link to="/send-form" class="button">Find Investors Now</router-link>
+              <!-- <span class="home-text01">About</span>
               <span class="home-text03">Pricing</span>
               <span class="home-text04">Blog</span>
               <router-link to="/send-form" class="home-text05">Send Forms</router-link>
-              <router-link to="/find-investors" class="home-text06">Find Investors</router-link>
+              <router-link to="/find-investors" class="home-text06">Find Investors</router-link> -->
             </nav>
-            <div class="home-container2">
+            <!-- <div class="home-container2">
               <button class="home-login button">Login</button>
               <button class="button">Register</button>
-            </div>
+            </div> -->
           </div>
-          <div class="home-icon-group">
+          <!-- <div class="home-icon-group">
             <svg viewBox="0 0 950.8571428571428 1024" class="home-icon04">
               <path
                 d="M925.714 233.143c-25.143 36.571-56.571 69.143-92.571 95.429 0.571 8 0.571 16 0.571 24 0 244-185.714 525.143-525.143 525.143-104.571 0-201.714-30.286-283.429-82.857 14.857 1.714 29.143 2.286 44.571 2.286 86.286 0 165.714-29.143 229.143-78.857-81.143-1.714-149.143-54.857-172.571-128 11.429 1.714 22.857 2.857 34.857 2.857 16.571 0 33.143-2.286 48.571-6.286-84.571-17.143-148-91.429-148-181.143v-2.286c24.571 13.714 53.143 22.286 83.429 23.429-49.714-33.143-82.286-89.714-82.286-153.714 0-34.286 9.143-65.714 25.143-93.143 90.857 112 227.429 185.143 380.571 193.143-2.857-13.714-4.571-28-4.571-42.286 0-101.714 82.286-184.571 184.571-184.571 53.143 0 101.143 22.286 134.857 58.286 41.714-8 81.714-23.429 117.143-44.571-13.714 42.857-42.857 78.857-81.143 101.714 37.143-4 73.143-14.286 106.286-28.571z"
@@ -76,27 +77,27 @@
                 d="M548 6.857v150.857h-89.714c-70.286 0-83.429 33.714-83.429 82.286v108h167.429l-22.286 169.143h-145.143v433.714h-174.857v-433.714h-145.714v-169.143h145.714v-124.571c0-144.571 88.571-223.429 217.714-223.429 61.714 0 114.857 4.571 130.286 6.857z"
               ></path>
             </svg>
-          </div>
+          </div> -->
         </div>
       </header>
     </header>
     <section class="home-hero">
       <div class="home-heading">
-        <h1 class="home-header01">Find yourself an Investments</h1>
+        <h1 class="home-header01">One form - 100s of investors</h1>
         <p class="home-caption">
-          Yocto is a top one solution to find Angels and Venture funds.
+          Submit your information to top Angels and VCs in one place.
         </p>
       </div>
       <div class="home-buttons">
-        <router-link to="/survey" class="button">Get Investments Now</router-link>
-        <button class="home-learn button-clean button">Learn more</button>
+        <router-link to="/send-form" class="button">Find Investors Now</router-link>
+        <button class="home-learn button-clean button">See Investor List</button>
       </div>
     </section>
     <section class="home-description">
       <img alt="image" src="/hero-divider-1500w.png" class="home-divider-image" />
-      <div class="home-container3">
-        <div class="home-description01">
-          <div class="home-content">
+      <!-- <div class="home-container3">
+        <div class="home-description01"> -->
+          <!-- <div class="home-content">
             <p class="home-paragraph">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor incididunt ut labore et dolore magna aliquat enim
@@ -107,8 +108,8 @@
                 eiusmod tempor incididunt ut labore et dolore magna aliquat enim
                 ad minim veniam, quis nostrud exercitation ullamco laboris nisi
             </p>
-          </div>
-          <div class="home-links">
+          </div> -->
+          <!-- <div class="home-links">
             <a
               href="https://twitter.com"
               target="_blank"
@@ -127,11 +128,11 @@
               <span>Join us on Discord</span>
               <img alt="image" src="/Icons/arrow.svg" class="home-arrow1" />
             </a>
-          </div>
-        </div>
-      </div>
+          </div> -->
+        <!-- </div>
+      </div> -->
     </section>
-    <section class="home-cards">
+    <!-- <section class="home-cards">
       <div class="home-row">
         <div class="home-card">
           <div class="home-avatar">
@@ -147,7 +148,7 @@
               </p>
             </div>
             <button class="home-learn1 button">
-              <span class="home-text07">Learn more</span>
+              <span class="home-text07">See investor list</span>
               <img alt="image" src="/Icons/arrow.svg" class="home-image02" />
             </button>
           </div>
@@ -170,12 +171,12 @@
               </p>
             </div>
             <button class="home-learn2 button">
-              <span class="home-text08">Learn more</span>
+              <span class="home-text08">See investor list</span>
               <img alt="image" src="/Icons/arrow-2.svg" class="home-image03" />
             </button>
           </div>
         </div>
-      </div>
+      </div> -->
       <!-- <div class="home-card02">
         <div class="home-avatar4">
           <img alt="image" src="/Avatars/light-avatar.svg" class="home-avatar5" />
@@ -191,14 +192,14 @@
               </p>
             </div>
             <button class="home-learn3 button">
-              <span class="home-text09">Learn more</span>
+              <span class="home-text09">See investor list</span>
               <img alt="image" src="/Icons/arrow-2.svg" class="home-image04" />
             </button>
           </div>
           <img alt="image" src="/group%202262.svg" class="home-image05" />
         </div>
       </div> -->
-    </section>
+    <!-- </section> -->
     <!-- <section class="home-collection">
       <div class="home-content04">
         <span class="home-caption01">collection</span>
@@ -335,7 +336,7 @@
             </p>
           </div>
           <button class="home-view3 button-link button">
-            <span>Learn More</span>
+            <span>See investor list</span>
             <img alt="image" src="/Icons/arrow.svg" class="home-image22" />
           </button>
         </div>
@@ -364,7 +365,7 @@
             </p>
           </div>
           <button class="home-view4 button-link button">
-            <span>Learn More</span>
+            <span>See investor list</span>
             <img alt="image" src="/Icons/arrow.svg" class="home-image25" />
           </button>
         </div>
@@ -473,7 +474,7 @@
             </p>
           </div>
           <button class="home-view5 button">Get Investments Now</button>
-          <router-link to="/survey" class="home-view5 button">Get Investments Now</router-link>
+          <router-link to="/survey" class="home-view5 button">Find Investors Now</router-link>
         </div>
         <img alt="image" src="/group%202273.svg" class="home-image29" />
       </div>
@@ -682,7 +683,7 @@
         </div>
       </div>
     </section> -->
-    <footer class="home-footer">
+    <!-- <footer class="home-footer">
       <div class="home-main5">
         <div class="home-branding">
           <div class="home-heading10">
@@ -752,7 +753,7 @@
         </div>
       </div>
       <span class="home-copyright">© 2024 Yocto. All Rights Reserved.</span>
-    </footer>
+    </footer> -->
     <div>
       <div class="home-container5">
         <DangerousHTML
@@ -873,11 +874,13 @@ export default {
   justify-content: space-between;
 }
 .home-logo {
-  color: rgb(255, 255, 255);
-  font-size: 32px;
+  color: #ff538c;
+  font-size: 52px;
   font-style: normal;
   font-weight: 600;
+  text-shadow: 1px 1px 0 #000, 2px 2px 0 #000000, 3px 3px 0 #000000;
 }
+
 .home-desktop-menu {
   display: flex;
 }
@@ -971,11 +974,13 @@ export default {
   justify-content: space-between;
 }
 .home-logo1 {
-  color: rgb(255, 255, 255);
-  font-size: 32px;
+  color: #ff538c;
+  font-size: 52px;
   font-style: normal;
   font-weight: 600;
+  text-shadow: 1px 1px 0 #000, 2px 2px 0 #000000, 3px 3px 0 #000000;
 }
+
 .home-menu-close {
   display: flex;
   align-items: center;
@@ -1082,6 +1087,7 @@ export default {
 }
 .home-learn {
   color: rgb(255, 255, 255);
+  text-decoration: underline;
 }
 .home-description {
   gap: 120px;
@@ -2693,9 +2699,6 @@ export default {
     display: flex;
     padding: var(--dl-space-space-unit);
     flex-direction: row;
-  }
-  .home-logo1 {
-    color: #000000;
   }
   .home-row {
     flex-direction: column;

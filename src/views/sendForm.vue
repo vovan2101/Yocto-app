@@ -3,6 +3,7 @@
     <transition name="fade" mode="out-in">
       <div v-if="titleText" key="titleText" class="fixed-title">{{ titleText }}</div>
     </transition>
+    <router-link to="/" class="home-logo">Yocto</router-link>
     <div ref="steps">
       <transition name="fade" mode="out-in">
         <div :key="currentStep">
@@ -52,28 +53,112 @@
           <h2>What is your relationship to the company?*</h2>
         </div>
         <div class="radio-group">
-          <div>
+          <label class="custom-radio">
             <input type="radio" id="founder" value="Founder" v-model="formData.relationship" required @change="checkOtherRelationship" />
-            <label for="founder">Founder</label>
-          </div>
-          <div>
+            <span class="radio-button">
+              <span class="radio-key">F</span> Founder
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+          <label class="custom-radio">
             <input type="radio" id="other" value="Other" v-model="formData.relationship" required @change="checkOtherRelationship" />
-            <label for="other">Other</label>
-            <div v-if="formData.relationship === 'Other'">
-              <input class="input-field" v-model="formData.other_relationship" placeholder="Please specify" required />
-            </div>
-          </div>
+            <span class="radio-button">
+              <span class="radio-key">O</span> Other
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
         </div>
+        
+        <!-- Поле ввода для уточнения, появляется только при выборе "Other" -->
+        <div v-if="formData.relationship === 'Other'" class="other-relationship-input">
+          <input class="input-field" v-model="formData.other_relationship" placeholder="Please specify" required />
+        </div>
+        
         <div class="button-container">
           <button class="button" @click="nextStep">Next</button>
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
+      <div v-if="currentStep === 5">
+      <div class="header-container">
+        <p class="step-indicator">h.</p>
+        <h2>Are you working on this full time (40+ hours/week)?*</h2>
+      </div>
+      <div class="radio-group">
+        <label class="custom-radio">
+          <input type="radio" name="full_time" value="Yes" v-model="formData.working_full_time" @change="showAdditionalQuestion">
+          <span class="radio-button">
+            <span class="radio-key">Y</span> Yes
+            <span class="checkmark">&#10003;</span>
+          </span>
+        </label>
+        <label class="custom-radio">
+          <input type="radio" name="full_time" value="No" v-model="formData.working_full_time" @change="hideAdditionalQuestion">
+          <span class="radio-button">
+            <span class="radio-key">N</span> No
+            <span class="checkmark">&#10003;</span>
+          </span>
+        </label>
+      </div>
+      <div v-if="showFullTimeDuration">
+        <div class="header-container">
+          <h3>How long have you been working on this full-time?</h3>
+        </div>
+        <div class="radio-group">
+          <label class="custom-radio">
+            <input type="radio" value="0-6 Months" v-model="formData.full_time_duration" required>
+            <span class="radio-button">
+              0-6 Months
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" value="6-12 Months" v-model="formData.full_time_duration" required>
+            <span class="radio-button">
+              6-12 Months
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" value="12-18 Months" v-model="formData.full_time_duration" required>
+            <span class="radio-button">
+              12-18 Months
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" value="18-24 Months" v-model="formData.full_time_duration" required>
+            <span class="radio-button">
+              18-24 Months
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" value="24-36 Months" v-model="formData.full_time_duration" required>
+            <span class="radio-button">
+              24-36 Months
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" value="36 Months or More" v-model="formData.full_time_duration" required>
+            <span class="radio-button">
+              36 Months or More
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+        </div>
+      </div>
+      <div class="button-container">
+        <button class="button" @click="nextStep">Next</button>
+        <p class="enter-text">press Enter ↵</p>
+      </div>
+    </div>
       <transition name="fade" mode="out-in">
       <div v-if="titleText" key="titleText" class="fixed-title">{{ titleText }}</div>
     </transition>
         <div :key="currentStep">
-      <div v-if="currentStep === 5">
+      <div v-if="currentStep === 6">
         <div class="header-container">
           <p class="step-indicator">2 →</p>
           <h2>Tell us more about your company</h2>
@@ -91,7 +176,7 @@
         </div>
       </div>
     </div>
-    <div v-if="currentStep === 6">
+    <div v-if="currentStep === 7">
         <div class="header-container">
           <p class="step-indicator">a.</p>
           <h2>What is your company name?*</h2>
@@ -102,7 +187,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 7">
+      <div v-if="currentStep === 8">
         <div class="header-container">
           <p class="step-indicator">b.</p>
           <h2>One-line Description</h2>
@@ -113,18 +198,29 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 8">
+      <div v-if="currentStep === 9">
         <div class="header-container">
           <p class="step-indicator">c.</p>
-          <h2>In 2-3 sentences, what does your company do?*</h2>
+          <h2>In one to two sentences, what is the problem you are trying to solve?*</h2>
         </div>
-        <textarea class="input-field" placeholder="What does your company do?*" v-model="formData.company_description" required></textarea>
+        <textarea class="input-field" placeholder="What is the problem you are trying to solve?*" v-model="formData.company_description" required></textarea>
         <div class="button-container">
           <button class="button" @click="nextStep">Next</button>
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 9">
+      <div v-if="currentStep === 10">
+        <div class="header-container">
+          <p class="step-indicator">c.</p>
+          <h2>In one to two sentences, what is your solution?*</h2>
+        </div>
+        <textarea class="input-field" placeholder="what is your solution?*" v-model="formData.company_solution" required></textarea>
+        <div class="button-container">
+          <button class="button" @click="nextStep">Next</button>
+          <p class="enter-text">press Enter ↵</p>
+        </div>
+      </div>
+      <div v-if="currentStep === 11">
         <div class="header-container">
           <p class="step-indicator">c.</p>
           <h2>In 2-3 sentences, what is the elevator pitch of your company?*</h2>
@@ -135,7 +231,52 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 10">
+      <div v-if="currentStep === 12">
+        <div class="header-container">
+          <p class="step-indicator">c.</p>
+          <h2>Who is your target customer & how are you going to acquire them?*</h2>
+        </div>
+        <textarea class="input-field" placeholder="how you think about customer acquisition*" v-model="formData.target_customer" required></textarea>
+        <div class="button-container">
+          <button class="button" @click="nextStep">Next</button>
+          <p class="enter-text">press Enter ↵</p>
+        </div>
+      </div>
+      <div v-if="currentStep === 13">
+          <div class="header-container">
+              <p class="step-indicator">c.</p>
+              <h2>How do you plan on acquiring your customers?*</h2>
+          </div>
+          <div class="checkbox-group">
+              <label class="custom-checkbox" v-for="option in acquisitionOptions" :key="option.value">
+                  <input 
+                      type="checkbox" 
+                      :value="option.value" 
+                      v-model="formData.customer_acquisition" 
+                      :disabled="isCustomerAcquisitionDisabled(option.value, formData.customer_acquisition)" 
+                      @change="handleCustomerAcquisitionChange" 
+                      required
+                  />
+                  <span class="checkbox-button">
+                      <span class="checkbox-key">{{ option.key }}</span> {{ option.label }}
+                      <span class="checkmark">&#10003;</span>
+                  </span>
+              </label>
+          </div>
+          <div v-if="formData.customer_acquisition.includes('Other')" class="other-customer-acquisition-input">
+              <input 
+                  class="input-field" 
+                  v-model="formData.other_customer_acquisition" 
+                  placeholder="Please specify" 
+                  required 
+              />
+          </div>
+          <div class="button-container">
+              <button class="button" @click="prepareCustomerAcquisitionData(); nextStep()">Next</button>
+              <p class="enter-text">press Enter ↵</p>
+          </div>
+      </div>
+      <div v-if="currentStep === 14">
     <div class="header-container">
       <p class="step-indicator">d.</p>
       <h2>Date Founded</h2>
@@ -146,144 +287,248 @@
       <p class="enter-text">press Enter ↵</p>
     </div>
     </div>
-    <div v-if="currentStep === 11">
-    <div class="header-container">
-        <p class="step-indicator">j.</p>
-        <h2>What is the status of your product?*</h2>
-    </div>
-    <select class="input-field" v-model="formData.product_status" required>
-        <option value="Idea/Prototype Stage" class="option-blue">Idea/Prototype Stage</option>
-        <option value="Currently building MVP" class="option-blue">Currently building MVP</option>
-        <option value="MVP built, < 3 months in market" class="option-green">MVP built, &lt; 3 months in market</option>
-        <option value="MVP built with > 3 months in the market" class="option-orange">MVP built with &gt; 3 months in the market</option>
-        <option value="Full-fledged product built, < 3 months in market" class="option-green">Full-fledged product built, &lt; 3 months in market</option>
-        <option value="Full-fledged product built, > 3 months in market" class="option-green">Full-fledged product built, &gt; 3 months in market</option>
-    </select>
-    <div class="button-container">
-        <button class="button" @click="nextStep">Next</button>
-        <p class="enter-text">press Enter ↵</p>
-    </div>
-</div>
-      <div v-if="currentStep === 12">
-            <div class="header-container">
-              <p class="step-indicator">e.</p>
-              <h2>What industry is your company in?*</h2>
-            </div>
-            <select class="input-field" v-model="formData.industry" @change="checkIndustry" required>
-              <option value="AdTech">AdTech</option>
-              <option value="Advertising / Marketing">Advertising / Marketing</option>
-              <option value="AI / ML">AI / ML</option>
-              <option value="Metaverse - AR/VR/ Other">Metaverse - AR/VR/ Other</option>
-              <option value="Beauty / Fashion Products">Beauty / Fashion Products</option>
-              <option value="B2B Marketplace">B2B Marketplace</option>
-              <option value="B2B SaaS">B2B SaaS</option>
-              <option value="Biotech">Biotech</option>
-              <option value="Blockchain / Crypto / NFT / Web3">Blockchain / Crypto / NFT / Web3</option>
-              <option value="Cannabis">Cannabis</option>
-              <option value="Cleantech / Climate / Sustainability">Cleantech / Climate / Sustainability</option>
-              <option value="Cloud Infrastructure">Cloud Infrastructure</option>
-              <option value="Communications / Collaboration / Productivity">Communications / Collaboration / Productivity</option>
-              <option value="Consumer">Consumer</option>
-              <option value="Consumer Goods">Consumer Goods</option>
-              <option value="Consumer Tech">Consumer Tech</option>
-              <option value="Construction / Materials">Construction / Materials</option>
-              <option value="Cyber Security">Cyber Security</option>
-              <option value="Data / Analytics">Data / Analytics</option>
-              <option value="Developer Tools">Developer Tools</option>
-              <option value="Digital Health">Digital Health</option>
-              <option value="Ecommerce Enablement">Ecommerce Enablement</option>
-              <option value="eCommerce">eCommerce</option>
-              <option value="Education / Personal and professional development">Education / Personal and professional development</option>
-              <option value="Electronics / IOT">Electronics / IOT</option>
-              <option value="Enterprise">Enterprise</option>
-              <option value="Family / Parenting / Relationships / ElderTech">Family / Parenting / Relationships / ElderTech</option>
-              <option value="Finance - banking / payments / lending">Finance - banking / payments / lending</option>
-              <option value="Finance - Insurance">Finance - Insurance</option>
-              <option value="Finance - Other">Finance - Other</option>
-              <option value="FinTech">FinTech</option>
-              <option value="Food / Beverages / agriculture">Food / Beverages / agriculture</option>
-              <option value="Gaming">Gaming</option>
-              <option value="General / Industry agnostic">General / Industry agnostic</option>
-              <option value="GovTech">GovTech</option>
-              <option value="Hardware">Hardware</option>
-              <option value="Health / Fitness / Wellness">Health / Fitness / Wellness</option>
-              <option value="Healthcare">Healthcare</option>
-              <option value="HR / hiring / employment">HR / hiring / employment</option>
-              <option value="Legal / government / regulation">Legal / government / regulation</option>
-              <option value="Longevity">Longevity</option>
-              <option value="Manufacturing">Manufacturing</option>
-              <option value="MarTech">MarTech</option>
-              <option value="Medical devices">Medical devices</option>
-              <option value="Metaverse - AR/VR/ Other">Metaverse - AR/VR/ Other</option>
-              <option value="Mobility / Transportation">Mobility / Transportation</option>
-              <option value="Personal and Professional Services">Personal and Professional Services</option>
-              <option value="Pets / animals">Pets / animals</option>
-              <option value="Physical infrastructure / Utilities">Physical infrastructure / Utilities</option>
-              <option value="Real Estate / Housing">Real Estate / Housing</option>
-              <option value="Robotics / drones">Robotics / drones</option>
-              <option value="SaaS">SaaS</option>
-              <option value="Sales / Operations / Customer Service">Sales / Operations / Customer Service</option>
-              <option value="Science / deep tech">Science / deep tech</option>
-              <option value="SMB SaaS">SMB SaaS</option>
-              <option value="Social media / Networking">Social media / Networking</option>
-              <option value="Space Tech">Space Tech</option>
-              <option value="Supply Chain: Logistics / Shipping / Delivery">Supply Chain: Logistics / Shipping / Delivery</option>
-              <option value="Travel / Hospitality">Travel / Hospitality</option>
-              <option value="Vertical Saas">Vertical Saas</option>
-              <option value="Other">Other</option>
-            </select>
-            <div v-if="formData.industry === 'FinTech'" class="input-field">
-              <label for="fintechType">Please specify:</label>
-              <select id="fintechType" v-model="formData.fintech_type">
-                <option value="B2B FinTech">B2B FinTech</option>
-                <option value="B2C FinTech">B2C FinTech</option>
-              </select>
-            </div>
-            <div class="button-container">
+    <div v-if="currentStep === 15">
+          <div class="header-container">
+              <p class="step-indicator">j.</p>
+              <h2>What is the status of your product?*</h2>
+          </div>
+          <select class="input-field" v-model="formData.product_status" required>
+              <option value="Idea/Prototype Stage" class="option-blue">Idea/Prototype Stage</option>
+              <option value="Currently building MVP" class="option-blue">Currently building MVP</option>
+              <option value="MVP built, < 3 months in market" class="option-green">MVP built, &lt; 3 months in market</option>
+              <option value="MVP built with > 3 months in the market" class="option-orange">MVP built with &gt; 3 months in the market</option>
+              <option value="Full-fledged product built, < 3 months in market" class="option-green">Full-fledged product built, &lt; 3 months in market</option>
+              <option value="Full-fledged product built, > 3 months in market" class="option-green">Full-fledged product built, &gt; 3 months in market</option>
+          </select>
+          <div class="button-container">
               <button class="button" @click="nextStep">Next</button>
               <p class="enter-text">press Enter ↵</p>
-            </div>
           </div>
-          <div v-if="currentStep === 13">
+      </div>
+      <div v-if="currentStep === 16">
         <div class="header-container">
-          <p class="step-indicator">i.</p>
-          <h2>What is the primary product your company is providing?*</h2>
+          <p class="step-indicator">k.</p>
+          <h2>Does your product have active users or customers?*</h2>
         </div>
-        <select class="input-field" v-model="formData.product" required>
-            <option value="Software - Service (SaaS)">Software - Service (SaaS)</option>
-            <option value="Software - Marketplace / Network">Software - Marketplace / Network</option>
-            <option value="Software - AI/ML">Software - AI/ML</option>
-            <option value="Software - Dev Tools">Software - Dev Tools</option>
-            <option value="Software - Infrastructure (API, cloud, etc.)">Software - Infrastructure (API, cloud, etc.)</option>
-            <option value="Software - Other">Software - Other</option>
-            <option value="Hardware">Hardware</option>
-            <option value="Physical Goods">Physical Goods</option>
-            <option value="Services">Services</option>
-            <option value="Digital Goods / Content">Digital Goods / Content</option>
-            <option value="Experiences">Experiences</option>
-            <option value="Other">Other</option>
-            <option value="Software - AI/ML, Hardware">Software - AI/ML, Hardware</option>
-            <option value="Software - AI/ML, Software - Infrastructure (API, cloud, etc.)">Software - AI/ML, Software - Infrastructure (API, cloud, etc.)</option>
-            <option value="Software - Marketplace / Network, Software - Service (SaaS)">Software - Marketplace / Network, Software - Service (SaaS)</option>
-            <option value="Physical Goods, Digital Goods / Content">Physical Goods, Digital Goods / Content</option>
-            <option value="Software - Infrastructure (API, cloud, etc.), Software - Marketplace / Network">Software - Infrastructure (API, cloud, etc.), Software - Marketplace / Network</option>
-            <option value="Software - Marketplace / Network, Digital Goods / Content">Software - Marketplace / Network, Digital Goods / Content</option>
-            <option value="Software - Marketplace / Network, Services">Software - Marketplace / Network, Services</option>
-            <option value="Software - Marketplace / Network, Software - Service (SaaS), Software - Dev Tools">Software - Marketplace / Network, Software - Service (SaaS), Software - Dev Tools</option>
-            <option value="Software - Service (SaaS), Software - Infrastructure (API, cloud, etc.), Hardware">Software - Service (SaaS), Software - Infrastructure (API, cloud, etc.), Hardware</option>
-            <option value="Services, Physical Goods, Experiences, Digital Goods / Content">Services, Physical Goods, Experiences, Digital Goods / Content</option>
-            <option value="Software - Service (SaaS), Software - Marketplace / Network, Software - AI/ML">Software - Service (SaaS), Software - Marketplace / Network, Software - AI/ML</option>
-            <option value="Software - Other, Services">Software - Other, Services</option>
-            <option value="Services, Other, Software - Infrastructure (API, cloud, etc.)">Services, Other, Software - Infrastructure (API, cloud, etc.)</option>
-            <option value="Experiences, Software - Marketplace / Network">Experiences, Software - Marketplace / Network</option>
-            <option value="Other, Software - Service (SaaS)">Other, Software - Service (SaaS)</option>
-        </select>
+        <div class="radio-group">
+          <label class="custom-radio">
+            <input type="radio" value="No" v-model="formData.active_customers" />
+            <span class="radio-button">
+              No
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" value="No, but we have a wait list" v-model="formData.active_customers" />
+            <span class="radio-button">
+              No, but we have a wait list
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" value="Yes" v-model="formData.active_customers" />
+            <span class="radio-button">
+              Yes
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+        </div>
         <div class="button-container">
           <button class="button" @click="nextStep">Next</button>
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 14">
+      <div v-if="currentStep === 17">
+        <div class="header-container">
+          <p class="step-indicator">k.</p>
+          <h2>How many users do you have?*</h2>
+        </div>
+        <div class="radio-group">
+          <label class="custom-radio">
+            <input type="radio" value="1-5" v-model="formData.how_many_users" />
+            <span class="radio-button">
+              1-5
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" value="6-10" v-model="formData.how_many_users" />
+            <span class="radio-button">
+              6-10
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" value="11-20" v-model="formData.how_many_users" />
+            <span class="radio-button">
+              11-20
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" value="21-50" v-model="formData.how_many_users" />
+            <span class="radio-button">
+              21-50
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" value="51-100" v-model="formData.how_many_users" />
+            <span class="radio-button">
+              51-100
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" value="101-300" v-model="formData.how_many_users" />
+            <span class="radio-button">
+              101-300
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" value="301-500" v-model="formData.how_many_users" />
+            <span class="radio-button">
+              301-500
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" value="501-1k" v-model="formData.how_many_users" />
+            <span class="radio-button">
+              501-1k
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" value="1-5k" v-model="formData.how_many_users" />
+            <span class="radio-button">
+              1-5k
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" value="5-10k" v-model="formData.how_many_users" />
+            <span class="radio-button">
+              5-10k
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" value="10k+" v-model="formData.how_many_users" />
+            <span class="radio-button">
+              10k+
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+        </div>
+        <div class="button-container">
+          <button class="button" @click="nextStep">Next</button>
+          <p class="enter-text">press Enter ↵</p>
+        </div>
+      </div>
+      <div v-if="currentStep === 18">
+          <div class="header-container">
+              <p class="step-indicator">e.</p>
+              <h2>What industry is your company in?*</h2>
+          </div>
+          <div class="checkbox-group">
+              <label class="custom-checkbox" v-for="option in industryOptions" :key="option.value">
+                  <input 
+                      type="checkbox" 
+                      :value="option.value" 
+                      v-model="formData.industry" 
+                      :disabled="isIndustryDisabled(option.value, formData.industry)"
+                      @change="handleIndustryChange"
+                  />
+                  <span class="checkbox-button">
+                      <span class="checkbox-key">{{ option.key }}</span> {{ option.label }}
+                      <span class="checkmark">&#10003;</span>
+                  </span>
+              </label>
+          </div>
+          <div v-if="formData.industry.includes('Other')" class="other-product-input">
+              <input 
+                  class="input-field" 
+                  v-model="formData.other_industry" 
+                  placeholder="Please specify" 
+                  required 
+              />
+          </div>
+          <div class="button-container">
+              <button class="button" @click="prepareIndustryData(); nextStep()">Next</button>
+              <p class="enter-text">press Enter ↵</p>
+          </div>
+      </div>
+
+      <div v-if="currentStep === 19">
+          <div class="header-container">
+              <p class="step-indicator">f.</p>
+              <h2>What is the primary product your company is providing?*</h2>
+          </div>
+          <div class="checkbox-group">
+              <label class="custom-checkbox" v-for="option in productOptions" :key="option.value">
+                  <input 
+                      type="checkbox" 
+                      :value="option.value" 
+                      v-model="formData.product" 
+                      :disabled="isDisabled(option.value, formData.product)"
+                      @change="handleProductChange"
+                  />
+                  <span class="checkbox-button">
+                      <span class="checkbox-key">{{ option.key }}</span> {{ option.label }}
+                      <span class="checkmark">&#10003;</span>
+                  </span>
+              </label>
+          </div>
+          <div v-if="formData.product.includes('Other')" class="other-product-input">
+              <input 
+                  class="input-field" 
+                  v-model="formData.other_product" 
+                  placeholder="Please specify" 
+                  required 
+              />
+          </div>
+          <div class="button-container">
+              <button class="button" @click="prepareProductData(); nextStep()">Next</button>
+              <p class="enter-text">press Enter ↵</p>
+          </div>
+      </div>
+      <div v-if="currentStep === 20">
+          <div class="header-container">
+              <p class="step-indicator">c.</p>
+              <h2>What is your Business Model?*</h2>
+          </div>
+          <div class="checkbox-group">
+              <label class="custom-checkbox" v-for="model in businessModelOptions" :key="model.value">
+                  <input 
+                      type="checkbox" 
+                      :value="model.value" 
+                      v-model="formData.business_model" 
+                      :disabled="isDisabled(model.value, formData.business_model)"
+                      @change="handleBusinessModelChange" 
+                      required
+                  />
+                  <span class="checkbox-button">
+                      <span class="checkbox-key">{{ model.key }}</span> {{ model.label }}
+                      <span class="checkmark">&#10003;</span>
+                  </span>
+              </label>
+          </div>
+          <div v-if="formData.business_model.includes('Other')" class="other-business-model-input">
+              <input 
+                  class="input-field" 
+                  v-model="formData.other_business_model" 
+                  placeholder="Please specify" 
+                  required 
+              />
+          </div>
+          <div class="button-container">
+              <button class="button" @click="prepareBusinessModelData(); nextStep()">Next</button>
+              <p class="enter-text">press Enter ↵</p>
+          </div>
+      </div>
+      <div v-if="currentStep === 21">
         <div class="header-container">
           <p class="step-indicator">f.</p>
           <h2>What is your company website?</h2>
@@ -294,7 +539,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 15">
+      <div v-if="currentStep === 22">
         <div class="header-container">
           <p class="step-indicator">g.</p>
           <h2>Add a link to your pitch deck*</h2>
@@ -305,7 +550,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 16">
+      <div v-if="currentStep === 23">
       <div class="header-container">
         <p class="step-indicator">h.</p>
         <h2>Add a file to your pitch deck</h2>
@@ -316,7 +561,7 @@
         <p class="enter-text">press Enter ↵</p>
       </div>
     </div>
-      <div v-if="currentStep === 17">
+    <div v-if="currentStep === 24">
         <div class="header-container">
           <p class="step-indicator">i.</p>
           <h2>Where is your company headquartered?*</h2>
@@ -326,12 +571,58 @@
           <option value="Canada">Canada</option>
           <option value="Mexico">Mexico</option>
           <option value="Asia - East">Asia - East</option>
-          <option value="Asia - India / Pakistan">Asia - India / Pakistan</option>
+          <option value="Asia - India / Pakistan / Bangladesh">Asia - India / Pakistan / Bangladesh</option>
           <option value="Asia - Southeast Asia">Asia - Southeast Asia</option>
+          <option value="Australia / New Zealand">Australia / New Zealand</option>
           <option value="Europe">Europe</option>
           <option value="Latin America">Latin America</option>
           <option value="Middle East">Middle East</option>
           <option value="Africa">Africa</option>
+          <option value="Other">Other</option>
+        </select>
+        <div v-if="formData.headquartered === 'US'" class="additional-question">
+          <h3>Are you a Delaware C Corp?</h3>
+          <div class="radio-group">
+            <label class="custom-radio">
+              <input type="radio" value="Yes" v-model="formData.is_delaware_corp" />
+              <span class="radio-button">
+                Yes
+                <span class="checkmark">&#10003;</span>
+              </span>
+            </label>
+            <label class="custom-radio">
+              <input type="radio" value="No" v-model="formData.is_delaware_corp" />
+              <span class="radio-button">
+                No
+                <span class="checkmark">&#10003;</span>
+              </span>
+            </label>
+          </div>
+        </div>
+        <div class="button-container">
+          <button class="button" @click="nextStep">Next</button>
+          <p class="enter-text">press Enter ↵</p>
+        </div>
+      </div>
+      <div v-if="currentStep === 25">
+        <div class="header-container">
+          <p class="step-indicator">i.</p>
+          <h2>Where are your main customers based?*</h2>
+        </div>
+        <select class="input-field" v-model="formData.customers_based" required>
+          <option value="US">US</option>
+          <option value="Canada">Canada</option>
+          <option value="Mexico">Mexico</option>
+          <option value="Asia - East">Asia - East</option>
+          <option value="Asia - Central">Asia - Central</option>
+          <option value="Asia - India / Pakistan / Bangladesh">Asia - India / Pakistan / Bangladesh</option>
+          <option value="Asia - Southeast Asia">Asia - Southeast Asia</option>
+          <option value="Australia / New Zealand">Australia / New Zealand</option>
+          <option value="Europe">Europe</option>
+          <option value="Latin America">Latin America</option>
+          <option value="Middle East">Middle East</option>
+          <option value="Africa">Africa</option>
+          <option value="Global">Global</option>
           <option value="Other">Other</option>
         </select>
         <div class="button-container">
@@ -339,7 +630,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 18">
+      <div v-if="currentStep === 26">
         <div class="header-container">
           <p class="step-indicator">j.</p>
           <h2>Where are you located? (City, State, Country)*</h2>
@@ -350,39 +641,70 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 19">
+      <div v-if="currentStep === 27">
         <div class="header-container">
           <p class="step-indicator">k.</p>
           <h2>What is the current or intended legal structure of the company?*</h2>
         </div>
-        <div class="checkbox-group">
-          <div>
-            <input type="checkbox" id="delaware_c_corp" value="Delaware C-Corp" v-model="formData.legal_structure" />
-            <label for="delaware_c_corp">Delaware C-Corp</label>
-          </div>
-          <div>
-            <input type="checkbox" id="canadian_company" value="Canadian company" v-model="formData.legal_structure" />
-            <label for="canadian_company">Canadian company</label>
-          </div>
-          <div>
-            <input type="checkbox" id="b_corp" value="B-Corp" v-model="formData.legal_structure" />
-            <label for="b_corp">B-Corp</label>
-          </div>
-          <div>
-            <input type="checkbox" id="pbc" value="Public Benefit Corporation (PBC)" v-model="formData.legal_structure" />
-            <label for="pbc">Public Benefit Corporation (PBC)</label>
-          </div>
-          <div>
-            <input type="checkbox" id="llc" value="LLC" v-model="formData.legal_structure" />
-            <label for="llc">LLC</label>
-          </div>
-          <div>
-            <input type="checkbox" id="s_corp" value="S-Corp" v-model="formData.legal_structure" />
-            <label for="s_corp">S-Corp</label>
-          </div>
-          <div>
-            <input type="checkbox" id="non_profit" value="Non-profit" v-model="formData.legal_structure" />
-            <label for="non_profit">Non-profit</label>
+        <div class="radio-group">
+          <label class="custom-radio">
+            <input type="radio" id="delaware_c_corp" value="Delaware C-Corp" v-model="formData.legal_structure" />
+            <span class="radio-button">
+              Delaware C-Corp
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" id="canadian_company" value="Canadian company" v-model="formData.legal_structure" />
+            <span class="radio-button">
+              Canadian company
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" id="b_corp" value="B-Corp" v-model="formData.legal_structure" />
+            <span class="radio-button">
+              B-Corp
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" id="pbc" value="Public Benefit Corporation (PBC)" v-model="formData.legal_structure" />
+            <span class="radio-button">
+              Public Benefit Corporation (PBC)
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" id="llc" value="LLC" v-model="formData.legal_structure" />
+            <span class="radio-button">
+              LLC
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" id="s_corp" value="S-Corp" v-model="formData.legal_structure" />
+            <span class="radio-button">
+              S-Corp
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" id="non_profit" value="Non-profit" v-model="formData.legal_structure" />
+            <span class="radio-button">
+              Non-profit
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" id="other" value="Other" v-model="formData.legal_structure" @change="checkOtherLegalStructure"/>
+            <span class="radio-button">
+              Other
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+          <div v-if="formData.legal_structure === 'Other'">
+            <input class="input-field" v-model="formData.other_legal_structure" placeholder="Please specify" />
           </div>
         </div>
         <div class="button-container">
@@ -390,11 +712,12 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
+
       <transition name="fade" mode="out-in">
       <div v-if="titleText" key="titleText" class="fixed-title">{{ titleText }}</div>
     </transition>
         <div :key="currentStep">
-      <div v-if="currentStep === 20">
+      <div v-if="currentStep === 28">
         <div class="header-container">
           <p class="step-indicator">3 →</p>
           <h2>Tell us more about your financing</h2>
@@ -412,7 +735,7 @@
         </div>
       </div>
     </div>
-      <div v-if="currentStep === 21">
+      <div v-if="currentStep === 29">
         <div class="header-container">
           <p class="step-indicator">a.</p>
           <h2>What round are you raising?*</h2>
@@ -441,7 +764,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 22">
+      <div v-if="currentStep === 30">
         <div class="header-container">
           <p class="step-indicator">b.</p>
           <h2>How much are you raising? (in USD)*</h2>
@@ -452,27 +775,113 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 23">
+      <div v-if="currentStep === 31">
+        <div class="header-container">
+          <p class="step-indicator">k.</p>
+          <h2>Is your startup currently earning revenue?*</h2>
+        </div>
+        <div class="radio-group">
+          <label class="custom-radio">
+            <input type="radio" value="Yes" v-model="formData.earning_revenue" />
+            <span class="radio-button">
+              Yes
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" value="No" v-model="formData.earning_revenue" />
+            <span class="radio-button">
+              No
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+        </div>
+        <div class="button-container">
+          <button class="button" @click="nextStep">Next</button>
+          <p class="enter-text">press Enter ↵</p>
+        </div>
+      </div>
+      <div v-if="currentStep === 32">
         <div class="header-container">
           <p class="step-indicator">i.</p>
           <h2>Approximately how much revenue is your company earning per month (in USD)?*</h2>
         </div>
         <select class="input-field" v-model="formData.earning_amount" required>
-          <option value="< 1000">< 1000</option>
-          <option value="1000 - 9,999">1000 - 9,999</option>
-          <option value="10,000 - 49,999">10,000 - 49,999</option>
-          <option value="50k - 99k">50k - 99k</option>
-          <option value="> 100k">> 100k</option>
-          <option value="100-4,999">100 - 4,999</option>
-          <option value="1-99">1 - 99</option>
-          <option value="5,000-10,000">5,000 - 10,000</option>
+          <option value="1-$999">$1 - $999</option>
+          <option value="$1000-$4,999">$1000 - $4,999</option>
+          <option value="$5,000-$10,000">$5,000 - $10,000</option>
+          <option value="$10,001+">$10,001 +</option>
         </select>
         <div class="button-container">
           <button class="button" @click="nextStep">Next</button>
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 24">
+      <div v-if="currentStep === 33">
+        <div class="header-container">
+          <p class="step-indicator">k.</p>
+          <h2>What do you expect your main source of revenue to be?*</h2>
+        </div>
+
+        <!-- Группа радиокнопок для выбора источника дохода -->
+        <div class="radio-group">
+          <label class="custom-radio">
+            <input type="radio" value="Ads / Sponsors" v-model="formData.source_of_revenue" @change="handleSourceChange" />
+            <span class="radio-button">
+              Ads / Sponsors
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" value="Affiliate" v-model="formData.source_of_revenue" @change="handleSourceChange" />
+            <span class="radio-button">
+              Affiliate
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" value="Commission (percentage of sale)" v-model="formData.source_of_revenue" @change="handleSourceChange" />
+            <span class="radio-button">
+              Commission (percentage of sale)
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" value="Purchases" v-model="formData.source_of_revenue" @change="handleSourceChange" />
+            <span class="radio-button">
+              Purchases
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" value="Subscription" v-model="formData.source_of_revenue" @change="handleSourceChange" />
+            <span class="radio-button">
+              Subscription
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+
+          <!-- Добавление варианта Other -->
+          <label class="custom-radio">
+            <input type="radio" value="Other" v-model="formData.source_of_revenue" @change="handleSourceChange" />
+            <span class="radio-button">
+              Other
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+        </div>
+
+        <!-- Поле ввода для уточнения, появляется только при выборе "Other" -->
+        <div v-if="formData.source_of_revenue === 'Other'" class="other-source-input">
+          <input class="input-field" v-model="formData.other_source_of_revenue" placeholder="Please specify" required />
+        </div>
+
+        <div class="button-container">
+          <button class="button" @click="nextStep">Next</button>
+          <p class="enter-text">press Enter ↵</p>
+        </div>
+      </div>
+      <div v-if="currentStep === 34">
         <div class="header-container">
           <p class="step-indicator">c.</p>
           <h2>What is your pre-money valuation? (in USD)</h2>
@@ -483,7 +892,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 25">
+      <div v-if="currentStep === 35">
         <div class="header-container">
           <p class="step-indicator">c.</p>
           <h2>What is your post-money valuation? (in USD)</h2>
@@ -494,7 +903,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 26">
+      <div v-if="currentStep === 36">
         <div class="header-container">
           <p class="step-indicator">d.</p>
           <h2>How much capital do you want to raise now (USD)?</h2>
@@ -509,7 +918,7 @@
       <div v-if="titleText" key="titleText" class="fixed-title">{{ titleText }}</div>
     </transition>
         <div :key="currentStep">
-      <div v-if="currentStep === 27">
+      <div v-if="currentStep === 37">
         <div class="header-container">
           <p class="step-indicator">4 →</p>
           <h2>Tell us more about you and your team</h2>
@@ -527,7 +936,7 @@
         </div>
       </div>
     </div>
-    <div v-if="currentStep === 28">
+    <div v-if="currentStep === 38">
       <div class="header-container">
         <p class="step-indicator">a.</p>
         <h2>What is your previous entrepreneurial experience?*</h2>
@@ -544,7 +953,7 @@
         <p class="enter-text">press Enter ↵</p>
       </div>
     </div>
-    <div v-if="currentStep === 29">
+    <div v-if="currentStep === 39">
         <div class="header-container">
           <p class="step-indicator">b.</p>
           <h2>In 2-3 sentences, why you / your team are awesome.*</h2>
@@ -555,7 +964,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 30">
+      <div v-if="currentStep === 40">
         <div class="header-container">
           <p class="step-indicator">c.</p>
           <h2>Founder LinkedIn</h2>
@@ -566,7 +975,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 31">
+      <div v-if="currentStep === 41">
         <div class="header-container">
           <p class="step-indicator">d.</p>
           <h2>CTO LinkedIn</h2>
@@ -577,7 +986,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 32">
+      <div v-if="currentStep === 42">
         <div class="header-container">
           <p class="step-indicator">e.</p>
           <h2>Your team's LinkedIn profiles.*</h2>
@@ -588,7 +997,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 33">
+      <div v-if="currentStep === 43">
         <div class="header-container">
           <p class="step-indicator">f.</p>
           <h2>Founder video URL</h2>
@@ -599,7 +1008,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 34">
+      <div v-if="currentStep === 44">
       <div class="header-container">
         <p class="step-indicator">g.</p>
         <h2>Upload short video about team and the company</h2>
@@ -610,14 +1019,77 @@
         <p class="enter-text">press Enter ↵</p>
       </div>
     </div>
-    <div v-if="currentStep === 35">
+    <div v-if="currentStep === 45">
         <div class="header-container">
           <p class="step-indicator">h.</p>
           <h2>Vision</h2>
         </div>
         <input class="input-field" type="url" placeholder="Vision" v-model="formData.vision" />
         <div class="button-container">
-          <button class="button" @click="submitForm">Send</button>
+          <button class="button" @click="nextStep">Next</button>
+          <p class="enter-text">press Enter ↵</p>
+        </div>
+      </div>
+      <div v-if="currentStep === 46">
+        <div class="header-container">
+          <p class="step-indicator">k.</p>
+          <h2>Would you be interested in pitching live in front of a virtual audience? This would involve asking you a series of questions about your business, then walking the audience through our decision-making process.</h2>
+        </div>
+        <div class="radio-group">
+          <label class="custom-radio">
+            <input type="radio" value="yes" v-model="formData.pitching_live" />
+            <span class="radio-button">
+              Yes
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" value="no" v-model="formData.pitching_live" />
+            <span class="radio-button">
+              No
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+        </div>
+        <div class="button-container">
+          <button class="button" @click="nextStep">Next</button>
+          <p class="enter-text">press Enter ↵</p>
+        </div>
+      </div>
+      <div v-if="currentStep === 47">
+        <div class="header-container">
+          <p class="step-indicator">k.</p>
+          <h2>Sometimes we meet companies that aren't a fit for us, but may be a fit for other venture firms we work with. If this is the case, would you like us to share your submission with them?</h2>
+        </div>
+        <div class="radio-group">
+          <label class="custom-radio">
+            <input type="radio" value="Yes" v-model="formData.share_submission" />
+            <span class="radio-button">
+              Yes
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" value="No" v-model="formData.share_submission" />
+            <span class="radio-button">
+              No
+              <span class="checkmark">&#10003;</span>
+            </span>
+          </label>
+        </div>
+        <div class="button-container">
+          <button class="button" @click="nextStep">Next</button>
+          <p class="enter-text">press Enter ↵</p>
+        </div>
+      </div>
+      <div v-if="currentStep === 48">
+        <div class="header-container">
+          <p class="step-indicator">b.</p>
+          <h2>(Optional) Anything else you want investors to know?</h2>
+        </div>
+        <textarea class="input-field" placeholder="Type your answer here..." v-model="formData.want_us_to_know" required></textarea>
+        <div class="button-container">
+          <button class="button" @click="submitForm">Submit</button>
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
@@ -640,30 +1112,182 @@ export default {
     return {
       currentStep: 1,
       showTitle: false,
+      industryOptions: [
+            { value: '3D printing', label: '3D printing' },
+            { value: 'AdTech', label: 'AdTech' },
+            { value: 'Agtech', label: 'Agtech' },
+            { value: 'Advertising / Marketing', label: 'Advertising / Marketing' },
+            { value: 'Audiotech', label: 'Audiotech' },
+            { value: 'Autonomous cars', label: 'Autonomous cars' },
+            { value: 'AI / ML', label: 'AI / ML' },
+            { value: 'Augmented reality (AR)', label: 'Augmented reality (AR)' },
+            { value: 'Beauty / Fashion Products', label: 'Beauty / Fashion Products' },
+            { value: 'B2B Marketplace', label: 'B2B Marketplace' },
+            { value: 'B2B SaaS', label: 'B2B SaaS' },
+            { value: 'B2B payments', label: 'B2B payments' },
+            { value: 'Biotech', label: 'Biotech' },
+            { value: 'Big Data', label: 'Big Data' },
+            { value: 'Blockchain / Crypto / NFT / Web3', label: 'Blockchain / Crypto / NFT / Web3' },
+            { value: 'Cannabis', label: 'Cannabis' },
+            { value: 'Carsharing', label: 'Carsharing' },
+            { value: 'Cleantech / Climate / Sustainability', label: 'Cleantech / Climate / Sustainability' },
+            { value: 'Cloudtech and DevOps', label: 'Cloudtech and DevOps' },
+            { value: 'Communications / Collaboration / Productivity', label: 'Communications / Collaboration / Productivity' },
+            { value: 'Consumer', label: 'Consumer' },
+            { value: 'Consumer Goods', label: 'Consumer Goods' },
+            { value: 'Consumer Tech', label: 'Consumer Tech' },
+            { value: 'Construction / Materials', label: 'Construction / Materials' },
+            { value: 'Cyber Security', label: 'Cyber Security' },
+            { value: 'Data / Analytics', label: 'Data / Analytics' },
+            { value: 'Developer Tools', label: 'Developer Tools' },
+            { value: 'Digital health', label: 'Digital health' },
+            { value: 'Ecommerce Enablement', label: 'Ecommerce Enablement' },
+            { value: 'eCommerce', label: 'eCommerce' },
+            { value: 'Education / Personal and professional development', label: 'Education / Personal and professional development' },
+            { value: 'Electronics / IOT', label: 'Electronics / IOT' },
+            { value: 'Enterprise', label: 'Enterprise' },
+            { value: 'Femtech', label: 'Femtech' },
+            { value: 'Future of Work', label: 'Future of Work' },
+            { value: 'Family / Parenting / Relationships / ElderTech', label: 'Family / Parenting / Relationships / ElderTech' },
+            { value: 'Finance - banking / payments / lending', label: 'Finance - banking / payments / lending' },
+            { value: 'Finance - Insurance', label: 'Finance - Insurance' },
+            { value: 'Finance - Other', label: 'Finance - Other' },
+            { value: 'FinTech', label: 'FinTech' },
+            { value: 'Food / Beverages / agriculture', label: 'Food / Beverages / agriculture' },
+            { value: 'Gaming', label: 'Gaming' },
+            { value: 'General / Industry agnostic', label: 'General / Industry agnostic' },
+            { value: 'GovTech', label: 'GovTech' },
+            { value: 'Hardware', label: 'Hardware' },
+            { value: 'Health / Fitness / Wellness', label: 'Health / Fitness / Wellness' },
+            { value: 'Healthcare', label: 'Healthcare' },
+            { value: 'HR / hiring / employment', label: 'HR / hiring / employment' },
+            { value: 'Impact investing', label: 'Impact investing' },
+            { value: 'Industrials', label: 'Industrials' },
+            { value: 'Legal / government / regulation', label: 'Legal / government / regulation' },
+            { value: 'Longevity', label: 'Longevity' },
+            { value: 'Lifestyles of Health and Sustainability (LOHAS) and wellness', label: 'Lifestyles of Health and Sustainability (LOHAS) and wellness' },
+            { value: 'Manufacturing', label: 'Manufacturing' },
+            { value: 'MarTech', label: 'MarTech' },
+            { value: 'Medical devices', label: 'Medical devices' },
+            { value: 'Mobility / Transportation', label: 'Mobility / Transportation' },
+            { value: 'Micro-mobility', label: 'Micro-mobility' },
+            { value: 'Mobility tech', label: 'Mobility tech' },
+            { value: 'Mobile', label: 'Mobile' },
+            { value: 'Mortgage tech', label: 'Mortgage tech' },
+            { value: 'Nanotechnology', label: 'Nanotechnology' },
+            { value: 'Oil and gas', label: 'Oil and gas' },
+            { value: 'Personal and Professional Services', label: 'Personal and Professional Services' },
+            { value: 'Pets / animals', label: 'Pets / animals' },
+            { value: 'Physical infrastructure / Utilities', label: 'Physical infrastructure / Utilities' },
+            { value: 'Real Estate / Housing', label: 'Real Estate / Housing' },
+            { value: 'Robotics / drones', label: 'Robotics / drones' },
+            { value: 'Restaurant tech', label: 'Restaurant tech' },
+            { value: 'SaaS', label: 'SaaS' },
+            { value: 'Sales / Operations / Customer Service', label: 'Sales / Operations / Customer Service' },
+            { value: 'Science / deep tech', label: 'Science / deep tech' },
+            { value: 'SMB SaaS', label: 'SMB SaaS' },
+            { value: 'Social Media / Community / Networking', label: 'Social Media / Community / Networking' },
+            { value: 'Space Tech', label: 'Space Tech' },
+            { value: 'Supply Chain: Logistics / Shipping / Delivery', label: 'Supply Chain: Logistics / Shipping / Delivery' },
+            { value: 'Travel / Hospitality', label: 'Travel / Hospitality' },
+            { value: 'Vertical Saas', label: 'Vertical Saas' },
+            { value: 'Virtual reality (VR)', label: 'Virtual reality (VR)' },
+            { value: 'Wearables and quantified self', label: 'Wearables and quantified self' },
+            { value: 'Other', label: 'Other' }
+        ],
+      businessModelOptions: [
+        { key: 'A', value: 'B2B', label: 'B2B' },
+        { key: 'B', value: 'B2C', label: 'B2C / D2C' },
+        { key: 'C', value: 'B2G', label: 'B2G' },
+        { key: 'D', value: 'B2B2C', label: 'B2B2C' },
+        { key: 'E', value: 'C2C', label: 'C2C' },
+        { key: 'F', value: 'C2B', label: 'C2B' },
+        { key: 'G', value: 'P2P', label: 'P2P' },
+        { key: 'H', value: 'Other', label: 'Other' }
+      ],
+      acquisitionOptions: [
+        { value: 'Affiliate', label: 'Affiliate' },
+        { value: 'Community Engagement & Referrals', label: 'Community Engagement & Referrals' },
+        { value: 'Content Marketing', label: 'Content Marketing' },
+        { value: 'Direct Sales', label: 'Direct Sales' },
+        { value: 'Events', label: 'Events' },
+        { value: 'Paid Advertisement', label: 'Paid Advertisement' },
+        { value: 'Partnerships', label: 'Partnerships' },
+        { value: 'SEO', label: 'SEO' },
+        { value: 'Social Media', label: 'Social Media' },
+        { value: 'Other', label: 'Other' }
+      ],
+      productOptions: [
+        { value: 'Software - Service (SaaS)', label: 'Software - Service (SaaS)' },
+        { value: 'Software - Marketplace / Network', label: 'Software - Marketplace / Network' },
+        { value: 'Software - AI/ML', label: 'Software - AI/ML' },
+        { value: 'Software - Dev Tools', label: 'Software - Dev Tools' },
+        { value: 'Software - Infrastructure (API, cloud, etc.)', label: 'Software - Infrastructure (API, cloud, etc.)' },
+        { value: 'Software - Other', label: 'Software - Other' },
+        { value: 'Hardware', label: 'Hardware' },
+        { value: 'Physical Goods', label: 'Physical Goods' },
+        { value: 'Services', label: 'Services' },
+        { value: 'Digital Goods / Content', label: 'Digital Goods / Content' },
+        { value: 'Experiences', label: 'Experiences' },
+        { value: 'Software - AI/ML, Hardware', label: 'Software - AI/ML, Hardware' },
+        { value: 'Software - AI/ML, Software - Infrastructure (API, cloud, etc.)', label: 'Software - AI/ML, Software - Infrastructure (API, cloud, etc.)' },
+        { value: 'Software - Marketplace / Network, Software - Service (SaaS)', label: 'Software - Marketplace / Network, Software - Service (SaaS)' },
+        { value: 'Physical Goods, Digital Goods / Content', label: 'Physical Goods, Digital Goods / Content' },
+        { value: 'Software - Infrastructure (API, cloud, etc.), Software - Marketplace / Network', label: 'Software - Infrastructure (API, cloud, etc.), Software - Marketplace / Network' },
+        { value: 'Software - Marketplace / Network, Digital Goods / Content', label: 'Software - Marketplace / Network, Digital Goods / Content' },
+        { value: 'Software - Marketplace / Network, Services', label: 'Software - Marketplace / Network, Services' },
+        { value: 'Software - Marketplace / Network, Software - Service (SaaS), Software - Dev Tools', label: 'Software - Marketplace / Network, Software - Service (SaaS), Software - Dev Tools' },
+        { value: 'Software - Service (SaaS), Software - Infrastructure (API, cloud, etc.), Hardware', label: 'Software - Service (SaaS), Software - Infrastructure (API, cloud, etc.), Hardware' },
+        { value: 'Services, Physical Goods, Experiences, Digital Goods / Content', label: 'Services, Physical Goods, Experiences, Digital Goods / Content' },
+        { value: 'Software - Service (SaaS), Software - Marketplace / Network, Software - AI/ML', label: 'Software - Service (SaaS), Software - Marketplace / Network, Software - AI/ML' },
+        { value: 'Software - Other, Services', label: 'Software - Other, Services' },
+        { value: 'Services, Other, Software - Infrastructure (API, cloud, etc.)', label: 'Services, Other, Software - Infrastructure (API, cloud, etc.)' },
+        { value: 'Experiences, Software - Marketplace / Network', label: 'Experiences, Software - Marketplace / Network' },
+        { value: 'Other, Software - Service (SaaS)', label: 'Other, Software - Service (SaaS)' },
+        { value: 'Other', label: 'Other' }
+      ],
       formData: {
         first_name: '',
         last_name: '',
         email: '',
         relationship: '',
         other_relationship: '',
+        working_full_time: '',
+        full_time_duration: '',
         company_name: '',
         one_line_description: '',
         company_description: '',
+        company_solution: '',
         pitch_description: '',
+        target_customer: '',
+        customer_acquisition: [],
+        other_customer_acquisition: '',
         date_founded: '',
         product_status: '',
-        industry: '',
-        product: '',
+        active_customers: '',
+        how_many_users: '',
+        industry: [],
+        other_industry: '',
+        product: [],
+        other_product: '',
+        business_model: [],
+        other_business_model: '',
         company_website: '',
         pitch_deck: '',
         pitch_deck_file: null,
         headquartered: '',
+        is_delaware_corp: '',
+        customers_based: '',
         specific_location: '',
-        legal_structure: [],
+        legal_structure: '',
+        other_legal_structure: '',
         raising_round: '',
         beyond_series_a_round: '',
         earning_amount: '',
         raising_amount: '',
+        earning_revenue: '',
+        source_of_revenue: '',
+        other_source_of_revenue: '',
         pre_money_valuation: '',
         post_money_valuation: '',
         capital_to_raise: '',
@@ -675,17 +1299,93 @@ export default {
         founder_video_url: '',
         founder_video_file: null,
         vision: '',
+        pitching_live: '',
+        share_submission: '',
+        want_us_to_know: '',
       },
       successMessage: '',
       errorMessage: ''
     };
   },
   methods: {
+    handleIndustryChange() {
+        // Если значение 'Other' не выбрано, сбрасываем значение поля other_industry
+        if (!this.formData.industry.includes('Other')) {
+            this.formData.other_industry = '';
+        }
+        if (this.formData.industry.length > 3) {
+            this.formData.industry.pop();
+        }
+    },
+    prepareIndustryData() {
+        // Формируем строку из выбранных значений индустрий
+        this.formData.industryString = this.formData.industry.join('; ');
+    },
+    prepareCustomerAcquisitionData() {
+            // Формируем строку из выбранных значений перед отправкой на сервер
+            this.formData.customer_acquisitionString = this.formData.customer_acquisition.join('; ');
+        },
+    handleProductChange() {
+        // Если значение 'Other' не выбрано, сбрасываем значение поля other_product
+        if (!this.formData.product.includes('Other')) {
+            this.formData.other_product = '';
+        }
+    },
+    handleSourceChange() {
+        // Если значение 'Other' не выбрано, сбрасываем значение поля other_product
+        if (!this.formData.source_of_revenue.includes('Other')) {
+            this.formData.other_source_of_revenue = '';
+        }
+    },
+    prepareProductData() {
+        // Формируем строку из выбранных значений перед отправкой на сервер
+        this.formData.productString = this.formData.product.join('; ');
+    },
+    prepareBusinessModelData() {
+        this.formData.businessModelString = this.formData.business_model.join('; ');
+    },
+    showAdditionalQuestion() {
+      this.showFullTimeDuration = true;
+    },
+    hideAdditionalQuestion() {
+      this.showFullTimeDuration = false;
+      this.formData.full_time_duration = ''; 
+    },
+    handleCustomerAcquisitionChange() {
+      if (!this.formData.customer_acquisition.includes('Other')) {
+        this.formData.other_customer_acquisition = '';
+      }
+    },
     checkOtherRelationship() {
       if (this.formData.relationship !== 'Other') {
         this.formData.other_relationship = '';
       }
     },
+    checkOtherBusinessModel() {
+   if (!this.formData.business_model.includes('Other')) {
+     this.formData.other_business_model = '';
+   }
+},
+    isDisabled(value, array, maxSelections = 2) {
+        // Блокируем остальные поля, если выбрано уже максимальное количество вариантов
+        return (
+            array.length >= maxSelections &&
+            !array.includes(value)
+        );
+    },
+    isIndustryDisabled(value, array) {
+        // Для поля "industry" устанавливаем максимум 3 выбора
+        return array.length >= 3 && !array.includes(value);
+    },
+    isCustomerAcquisitionDisabled(value, array) {
+            // Для поля "customer acquisition" устанавливаем максимум 3 выбора
+            return this.isDisabled(value, array, 3);
+        },
+    checkOtherLegalStructure() {
+    if (!this.formData.legal_structure.includes('Other')) {
+      this.formData.other_legal_structure = '';
+    }
+  },
     checkIndustry() {
       if (this.formData.industry !== 'FinTech') {
         this.formData.fintech_type = '';
@@ -705,7 +1405,7 @@ export default {
       this.formData.pitch_deck_file = file;
     },
     nextStep() {
-      if (this.currentStep < 35) {
+      if (this.currentStep < 48) {
         this.currentStep++;
         this.scrollToCurrentStep();
         if (this.currentStep !== 1) {
@@ -733,6 +1433,18 @@ export default {
     async submitForm() {
       if (this.formData.relationship === 'Other' && !this.formData.other_relationship) {
         this.errorMessage = 'Please specify your relationship to the company.';
+        this.successMessage = '';
+        return;
+      }
+
+      if (this.formData.business_model === 'Other' && !this.formData.other_business_model) {
+        this.errorMessage = 'Please specify your business model.';
+        this.successMessage = '';
+        return;
+      }
+
+      if (this.formData.product === 'Other' && !this.formData.other_product) {
+        this.errorMessage = 'Please specify your product.';
         this.successMessage = '';
         return;
       }
@@ -777,13 +1489,13 @@ export default {
   },
   computed: {
   titleText() {
-    if (this.currentStep >= 28 && this.currentStep <= 35) {
+    if (this.currentStep >= 38 && this.currentStep <= 48) {
       return '4 → Tell us more about you and your team';
-    } else if (this.currentStep >= 21 && this.currentStep <= 26) {
+    } else if (this.currentStep >= 29 && this.currentStep <= 36) {
       return '3 → Tell us more about your financing';
-    } else if (this.currentStep >= 6 && this.currentStep <= 19) {
+    } else if (this.currentStep >= 7 && this.currentStep <= 27) {
       return '2 → Tell us more about your company';
-    } else if (this.currentStep >= 2 && this.currentStep <= 4) {
+    } else if (this.currentStep >= 2 && this.currentStep <= 5) {
       return "1 → First let's start with the basics";
     }
     return null;
@@ -806,18 +1518,27 @@ body {
 
 .outer-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  height: 100vh;
+  justify-content: center; /* Центрируем заголовок по вертикали */
+  height: 100vh; /* Высота контейнера на весь экран */
   background-color: #27272D;
 }
-
 h2 {
   color: #ffffff;
   font-size: 2.5em; /* Увеличим размер шрифта заголовков */
   margin-bottom: 20px;
   font-family: Inter;
 }
+
+h3 {
+  color: #ffffff;
+  font-size: 1.5em; /* Увеличим размер шрифта заголовков */
+  margin-bottom: 20px;
+  font-family: Inter;
+  margin-top: 20px;
+}
+
 
 .header-container {
   display: flex;
@@ -834,8 +1555,8 @@ p {
 }
 
 .input-field {
-  width: 90%; /* Увеличим ширину полей ввода */
-  padding: 15px 25px; /* Увеличим внутренние отступы */
+  width: 70%; /* Увеличим ширину полей ввода */
+  padding: 10px 15px; /* Увеличим внутренние отступы */
   margin: 10px 0; /* Увеличим внешние отступы */
   box-sizing: border-box;
   border: none;
@@ -932,14 +1653,135 @@ button:focus {
   outline: 2px solid #f0c14b;
 }
 
-.checkbox-group,
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 300px;
+  overflow-y: auto; /* Добавляем прокрутку, если элементы не помещаются */
+  max-height: 60vh; /* Ограничиваем высоту группы чекбоксов, чтобы они не вытесняли заголовок */
+}
 .radio-group {
-  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 300px;
+  overflow-y: auto; /* Добавляем прокрутку, если элементы не помещаются */
+  max-height: 60vh; /* Ограничиваем высоту группы радио-кнопок, чтобы они не вытесняли заголовок */
+}
+.custom-radio {
+  display: flex;
+  align-items: center;
+  background-color: #f3f3f3;
+  padding: 4px 8px;
+  border: 2px solid #ccc;
+  cursor: pointer;
+  position: relative;
+  width: 100%;
 }
 
-.checkbox-group label,
-.radio-group label {
-  margin-left: 8px; 
+.custom-radio:hover {
+  background-color: #acacac; /* Цвет при наведении мыши */
+}
+
+.custom-radio input[type="radio"] {
+  display: none;
+}
+
+.radio-button {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 500;
+  width: 100%;
+}
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  background-color: #f3f3f3;
+  padding: 4px 8px;
+  border: 2px solid #ccc;
+  cursor: pointer;
+  position: relative;
+  width: 100%;
+}
+
+.custom-checkbox input[type="checkbox"] {
+  display: none;
+}
+
+
+.custom-checkbox input[type="checkbox"]:checked + .checkbox-button {
+  background-color: #ffffff;
+  border-color: #000;
+}
+
+.custom-checkbox input[type="checkbox"]:checked + .checkbox-button .checkbox-key {
+  background-color: #ff538c;
+  color: #fff;
+  border-color: #ff538c;
+}
+.checkbox-button {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 500;
+  position: relative;
+  width: 100%;
+  justify-content: space-between; /* Растягиваем содержимое по ширине */
+}
+.custom-checkbox input[type="checkbox"]:checked + .checkbox-button .checkmark {
+  display: inline;
+}
+
+.custom-checkbox:hover {
+  background-color: #e0e0e0;
+}
+
+.custom-checkbox:hover .checkbox-button {
+  color: #333;
+}
+
+.checkbox-key {
+  display: none; /* Скрываем розовую букву */
+}
+
+
+.custom-checkbox:hover .checkbox-key {
+  background-color: #d0d0d0;
+}
+
+.radio-key {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px; /* Уменьшили размер ключа */
+  height: 18px; /* Уменьшили размер ключа */
+  background-color: #fff;
+  margin-right: 10px;
+  font-weight: bold;
+  font-size: 12px; /* Уменьшили размер шрифта */
+  color: #000;
+}
+
+.custom-radio input[type="radio"]:checked + .radio-button {
+  background-color: #ffffff;
+  border-color: #000;
+}
+
+.custom-radio input[type="radio"]:checked + .radio-button .radio-key {
+  background-color: #ff538c;
+  color: #fff;
+  border-color: #ff538c;
+}
+.checkmark {
+  display: none;
+  margin-left: auto;
+  color: #000;
+}
+
+.custom-radio input[type="radio"]:checked + .radio-button .checkmark {
+  display: inline;
 }
 
 .fade-enter-active, .fade-leave-active {
@@ -949,5 +1791,18 @@ button:focus {
 .fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
   opacity: 0;
 }
-
+.home-logo {
+  position: absolute; /* Или fixed, если хотите, чтобы текст был зафиксирован на экране */
+  top: 60px; /* Задайте отступ от верхней части после фиксированного заголовка */
+  left: 20px; /* Отступ от левой части экрана */
+  color: #ff538c;
+  font-size: 52px;
+  font-style: normal;
+  font-weight: 600;
+  text-shadow: 1px 1px 0 #000, 2px 2px 0 #000000, 3px 3px 0 #000000;
+  z-index: 2; /* Этот элемент будет выше других элементов на странице */
+}
+.other-relationship-input {
+  margin-top: 15px; /* Добавляем отступ сверху, чтобы поле не прилипало к радио-кнопкам */
+}
 </style>
