@@ -49,6 +49,17 @@
       </div>
       <div v-if="currentStep === 4">
         <div class="header-container">
+            <p class="step-indicator">b.</p>
+            <h2>What is your phone number?</h2>
+        </div>
+        <input class="input-field" type="tel" placeholder="Enter your phone number*" v-model="formData.phone_number" required />
+        <div class="button-container">
+            <button class="button" @click="nextStep">Next</button>
+            <p class="enter-text">press Enter ↵</p>
+        </div>
+    </div>
+      <div v-if="currentStep === 5">
+        <div class="header-container">
           <p class="step-indicator">c.</p>
           <h2>What is your relationship to the company?*</h2>
         </div>
@@ -79,7 +90,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 5">
+      <div v-if="currentStep === 6">
       <div class="header-container">
         <p class="step-indicator">h.</p>
         <h2>Are you working on this full time (40+ hours/week)?*</h2>
@@ -158,7 +169,7 @@
       <div v-if="titleText" key="titleText" class="fixed-title">{{ titleText }}</div>
     </transition>
         <div :key="currentStep">
-      <div v-if="currentStep === 6">
+      <div v-if="currentStep === 7">
         <div class="header-container">
           <p class="step-indicator">2 →</p>
           <h2>Tell us more about your company</h2>
@@ -176,7 +187,7 @@
         </div>
       </div>
     </div>
-    <div v-if="currentStep === 7">
+    <div v-if="currentStep === 8">
         <div class="header-container">
           <p class="step-indicator">a.</p>
           <h2>What is your company name?*</h2>
@@ -187,7 +198,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 8">
+      <div v-if="currentStep === 9">
         <div class="header-container">
           <p class="step-indicator">b.</p>
           <h2>One-line Description</h2>
@@ -198,7 +209,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 9">
+      <div v-if="currentStep === 10">
         <div class="header-container">
           <p class="step-indicator">c.</p>
           <h2>In one to two sentences, what is the problem you are trying to solve?*</h2>
@@ -209,7 +220,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 10">
+      <div v-if="currentStep === 11">
         <div class="header-container">
           <p class="step-indicator">c.</p>
           <h2>In one to two sentences, what is your solution?*</h2>
@@ -220,7 +231,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 11">
+      <div v-if="currentStep === 12">
         <div class="header-container">
           <p class="step-indicator">c.</p>
           <h2>In 2-3 sentences, what is the elevator pitch of your company?*</h2>
@@ -231,7 +242,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 12">
+      <div v-if="currentStep === 13">
         <div class="header-container">
           <p class="step-indicator">c.</p>
           <h2>Who is your target customer & how are you going to acquire them?*</h2>
@@ -242,7 +253,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 13">
+      <div v-if="currentStep === 14">
           <div class="header-container">
               <p class="step-indicator">c.</p>
               <h2>How do you plan on acquiring your customers?*</h2>
@@ -276,7 +287,7 @@
               <p class="enter-text">press Enter ↵</p>
           </div>
       </div>
-      <div v-if="currentStep === 14">
+      <div v-if="currentStep === 15">
     <div class="header-container">
       <p class="step-indicator">d.</p>
       <h2>Date Founded</h2>
@@ -287,7 +298,7 @@
       <p class="enter-text">press Enter ↵</p>
     </div>
     </div>
-    <div v-if="currentStep === 15">
+    <div v-if="currentStep === 16">
           <div class="header-container">
               <p class="step-indicator">j.</p>
               <h2>What is the status of your product?*</h2>
@@ -305,7 +316,7 @@
               <p class="enter-text">press Enter ↵</p>
           </div>
       </div>
-      <div v-if="currentStep === 16">
+      <div v-if="currentStep === 17">
         <div class="header-container">
           <p class="step-indicator">k.</p>
           <h2>Does your product have active users or customers?*</h2>
@@ -338,7 +349,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 17">
+      <div v-if="currentStep === 18">
         <div class="header-container">
           <p class="step-indicator">k.</p>
           <h2>How many users do you have?*</h2>
@@ -427,7 +438,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 18">
+      <div v-if="currentStep === 19">
           <div class="header-container">
               <p class="step-indicator">e.</p>
               <h2>What industry is your company in?*</h2>
@@ -460,8 +471,31 @@
               <p class="enter-text">press Enter ↵</p>
           </div>
       </div>
-
-      <div v-if="currentStep === 19">
+      <div v-if="currentStep === 20">
+        <div class="header-container">
+            <p class="step-indicator">e.</p>
+            <h2>What industry is your company in?*</h2>
+        </div>
+        <div class="radio-group">
+            <label class="custom-radio" v-for="option in snapshotIndustryOptions" :key="option.value">
+                <input 
+                    type="radio" 
+                    :id="option.value" 
+                    :value="option.value" 
+                    v-model="formData.liberty_ventures_industry" 
+                />
+                <span class="radio-button">
+                    {{ option.label }}
+                    <span class="checkmark">&#10003;</span>
+                </span>
+            </label>
+        </div>
+        <div class="button-container">
+            <button class="button" @click="nextStep">Next</button>
+            <p class="enter-text">press Enter ↵</p>
+        </div>
+    </div>
+      <div v-if="currentStep === 21">
           <div class="header-container">
               <p class="step-indicator">f.</p>
               <h2>What is the primary product your company is providing?*</h2>
@@ -494,7 +528,7 @@
               <p class="enter-text">press Enter ↵</p>
           </div>
       </div>
-      <div v-if="currentStep === 20">
+      <div v-if="currentStep === 22">
           <div class="header-container">
               <p class="step-indicator">c.</p>
               <h2>What is your Business Model?*</h2>
@@ -528,7 +562,7 @@
               <p class="enter-text">press Enter ↵</p>
           </div>
       </div>
-      <div v-if="currentStep === 21">
+      <div v-if="currentStep === 23">
         <div class="header-container">
           <p class="step-indicator">f.</p>
           <h2>What is your company website?</h2>
@@ -539,7 +573,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 22">
+      <div v-if="currentStep === 24">
         <div class="header-container">
           <p class="step-indicator">g.</p>
           <h2>Add a link to your pitch deck*</h2>
@@ -550,7 +584,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 23">
+      <div v-if="currentStep === 25">
       <div class="header-container">
         <p class="step-indicator">h.</p>
         <h2>Add a file to your pitch deck</h2>
@@ -561,7 +595,7 @@
         <p class="enter-text">press Enter ↵</p>
       </div>
     </div>
-    <div v-if="currentStep === 24">
+    <div v-if="currentStep === 26">
         <div class="header-container">
           <p class="step-indicator">i.</p>
           <h2>Where is your company headquartered?*</h2>
@@ -604,7 +638,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 25">
+      <div v-if="currentStep === 27">
         <div class="header-container">
           <p class="step-indicator">i.</p>
           <h2>Where are your main customers based?*</h2>
@@ -630,7 +664,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 26">
+      <div v-if="currentStep === 28">
         <div class="header-container">
           <p class="step-indicator">j.</p>
           <h2>Where are you located? (City, State, Country)*</h2>
@@ -641,7 +675,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 27">
+      <div v-if="currentStep === 29">
         <div class="header-container">
           <p class="step-indicator">k.</p>
           <h2>What is the current or intended legal structure of the company?*</h2>
@@ -717,7 +751,7 @@
       <div v-if="titleText" key="titleText" class="fixed-title">{{ titleText }}</div>
     </transition>
         <div :key="currentStep">
-      <div v-if="currentStep === 28">
+      <div v-if="currentStep === 30">
         <div class="header-container">
           <p class="step-indicator">3 →</p>
           <h2>Tell us more about your financing</h2>
@@ -735,7 +769,7 @@
         </div>
       </div>
     </div>
-      <div v-if="currentStep === 29">
+      <div v-if="currentStep === 31">
         <div class="header-container">
           <p class="step-indicator">a.</p>
           <h2>What round are you raising?*</h2>
@@ -764,7 +798,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 30">
+      <div v-if="currentStep === 32">
         <div class="header-container">
           <p class="step-indicator">b.</p>
           <h2>How much are you raising? (in USD)*</h2>
@@ -775,7 +809,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 31">
+      <div v-if="currentStep === 33">
         <div class="header-container">
           <p class="step-indicator">k.</p>
           <h2>Is your startup currently earning revenue?*</h2>
@@ -801,7 +835,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 32">
+      <div v-if="currentStep === 34">
         <div class="header-container">
           <p class="step-indicator">i.</p>
           <h2>Approximately how much revenue is your company earning per month (in USD)?*</h2>
@@ -817,7 +851,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 33">
+      <div v-if="currentStep === 35">
         <div class="header-container">
           <p class="step-indicator">k.</p>
           <h2>What do you expect your main source of revenue to be?*</h2>
@@ -881,7 +915,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 34">
+      <div v-if="currentStep === 36">
         <div class="header-container">
           <p class="step-indicator">c.</p>
           <h2>What is your pre-money valuation? (in USD)</h2>
@@ -892,7 +926,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 35">
+      <div v-if="currentStep === 37">
         <div class="header-container">
           <p class="step-indicator">c.</p>
           <h2>What is your post-money valuation? (in USD)</h2>
@@ -903,7 +937,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 36">
+      <div v-if="currentStep === 38">
         <div class="header-container">
           <p class="step-indicator">d.</p>
           <h2>How much capital do you want to raise now (USD)?</h2>
@@ -918,7 +952,7 @@
       <div v-if="titleText" key="titleText" class="fixed-title">{{ titleText }}</div>
     </transition>
         <div :key="currentStep">
-      <div v-if="currentStep === 37">
+      <div v-if="currentStep === 39">
         <div class="header-container">
           <p class="step-indicator">4 →</p>
           <h2>Tell us more about you and your team</h2>
@@ -936,7 +970,7 @@
         </div>
       </div>
     </div>
-    <div v-if="currentStep === 38">
+    <div v-if="currentStep === 40">
       <div class="header-container">
         <p class="step-indicator">a.</p>
         <h2>What is your previous entrepreneurial experience?*</h2>
@@ -953,7 +987,7 @@
         <p class="enter-text">press Enter ↵</p>
       </div>
     </div>
-    <div v-if="currentStep === 39">
+    <div v-if="currentStep === 41">
         <div class="header-container">
           <p class="step-indicator">b.</p>
           <h2>In 2-3 sentences, why you / your team are awesome.*</h2>
@@ -964,7 +998,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 40">
+      <div v-if="currentStep === 42">
         <div class="header-container">
           <p class="step-indicator">c.</p>
           <h2>Founder LinkedIn</h2>
@@ -975,7 +1009,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 41">
+      <div v-if="currentStep === 43">
         <div class="header-container">
           <p class="step-indicator">d.</p>
           <h2>CTO LinkedIn</h2>
@@ -986,7 +1020,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 42">
+      <div v-if="currentStep === 44">
         <div class="header-container">
           <p class="step-indicator">e.</p>
           <h2>Your team's LinkedIn profiles.*</h2>
@@ -997,7 +1031,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 43">
+      <div v-if="currentStep === 45">
         <div class="header-container">
           <p class="step-indicator">f.</p>
           <h2>Founder video URL</h2>
@@ -1008,7 +1042,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 44">
+      <div v-if="currentStep === 46">
       <div class="header-container">
         <p class="step-indicator">g.</p>
         <h2>Upload short video about team and the company</h2>
@@ -1019,7 +1053,7 @@
         <p class="enter-text">press Enter ↵</p>
       </div>
     </div>
-    <div v-if="currentStep === 45">
+    <div v-if="currentStep === 47">
         <div class="header-container">
           <p class="step-indicator">h.</p>
           <h2>Vision</h2>
@@ -1030,7 +1064,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 46">
+      <div v-if="currentStep === 48">
         <div class="header-container">
           <p class="step-indicator">k.</p>
           <h2>Would you be interested in pitching live in front of a virtual audience? This would involve asking you a series of questions about your business, then walking the audience through our decision-making process.</h2>
@@ -1056,7 +1090,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 47">
+      <div v-if="currentStep === 49">
         <div class="header-container">
           <p class="step-indicator">k.</p>
           <h2>Sometimes we meet companies that aren't a fit for us, but may be a fit for other venture firms we work with. If this is the case, would you like us to share your submission with them?</h2>
@@ -1082,12 +1116,24 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 48">
+      <div v-if="currentStep === 50">
         <div class="header-container">
           <p class="step-indicator">b.</p>
           <h2>(Optional) Anything else you want investors to know?</h2>
         </div>
         <textarea class="input-field" placeholder="Type your answer here..." v-model="formData.want_us_to_know" required></textarea>
+        <div class="button-container">
+          <button class="button" @click="nextStep">Next</button>
+          <p class="enter-text">press Enter ↵</p>
+        </div>
+      </div>
+      <div v-if="currentStep === 51">
+        <div class="header-container">
+          <p class="step-indicator">b.</p>
+          <h2>How do the values of your team align with those of Liberty Ventures?</h2>
+        </div>
+        <p>Check our website for more information on our values: https://libertyventures.xyz/values</p>
+        <textarea class="input-field" placeholder="Type your answer here..." v-model="formData.value_of_team" required></textarea>
         <div class="button-container">
           <button class="button" @click="submitForm">Submit</button>
           <p class="enter-text">press Enter ↵</p>
@@ -1112,6 +1158,137 @@ export default {
     return {
       currentStep: 1,
       showTitle: false,
+      snapshotIndustryOptions: [
+            { value: 'Smart Cities/Urban Tech', label: 'Smart Cities/Urban Tech' },
+            { value: 'Logistics', label: 'Logistics' },
+            { value: 'Airlines and Aviation', label: 'Airlines and Aviation' },
+            { value: 'Architecture & Planning', label: 'Architecture & Planning' },
+            { value: 'Graphic Design', label: 'Graphic Design' },
+            { value: 'Accounting', label: 'Accounting' },
+            { value: 'Business Supplies & Equipment', label: 'Business Supplies & Equipment' },
+            { value: 'Environmental Services', label: 'Environmental Services' },
+            { value: 'Events Services', label: 'Events Services' },
+            { value: 'Executive Office', label: 'Executive Office' },
+            { value: 'Facilities Services', label: 'Facilities Services' },
+            { value: 'Human Resources', label: 'Human Resources' },
+            { value: 'Management Consulting', label: 'Management Consulting' },
+            { value: 'Outsourcing/Offshoring', label: 'Outsourcing/Offshoring' },
+            { value: 'Professional Training & Coaching', label: 'Professional Training & Coaching' },
+            { value: 'Security & Investigations', label: 'Security & Investigations' },
+            { value: 'Staffing & Recruiting', label: 'Staffing & Recruiting' },
+            { value: 'Retail', label: 'Retail' },
+            { value: 'Supermarkets', label: 'Supermarkets' },
+            { value: 'Wholesale', label: 'Wholesale' },
+            { value: 'Mining & Metals', label: 'Mining & Metals' },
+            { value: 'Utilities', label: 'Utilities' },
+            { value: 'Aviation & Aerospace', label: 'Aviation & Aerospace' },
+            { value: 'Chemicals', label: 'Chemicals' },
+            { value: 'Defense & Space', label: 'Defense & Space' },
+            { value: 'Electrical & Electronic Manufacturing', label: 'Electrical & Electronic Manufacturing' },
+            { value: 'Food Production', label: 'Food Production' },
+            { value: 'Glass', label: 'Glass' },
+            { value: 'Ceramics & Concrete', label: 'Ceramics & Concrete' },
+            { value: 'Industrial Automation', label: 'Industrial Automation' },
+            { value: 'Machinery', label: 'Machinery' },
+            { value: 'Mechanical or Industrial Engineering', label: 'Mechanical or Industrial Engineering' },
+            { value: 'Packaging & Containers', label: 'Packaging & Containers' },
+            { value: 'Paper & Forest Products', label: 'Paper & Forest Products' },
+            { value: 'Plastics', label: 'Plastics' },
+            { value: 'Railroad Manufacture', label: 'Railroad Manufacture' },
+            { value: 'Shipbuilding', label: 'Shipbuilding' },
+            { value: 'Textiles', label: 'Textiles' },
+            { value: 'Banking', label: 'Banking' },
+            { value: 'Capital Markets', label: 'Capital Markets' },
+            { value: 'Investment Banking', label: 'Investment Banking' },
+            { value: 'Investment Management', label: 'Investment Management' },
+            { value: 'Venture Capital & Private Equity', label: 'Venture Capital & Private Equity' },
+            { value: 'Gambling & Casinos', label: 'Gambling & Casinos' },
+            { value: 'Hospitality', label: 'Hospitality' },
+            { value: 'Leisure', label: 'Leisure' },
+            { value: 'Travel & Tourism', label: 'Travel & Tourism' },
+            { value: 'Restaurants', label: 'Restaurants' },
+            { value: 'Recreational Facilities & Services', label: 'Recreational Facilities & Services' },
+            { value: 'Sports', label: 'Sports' },
+            { value: 'Arts & Crafts', label: 'Arts & Crafts' },
+            { value: 'Fine Art', label: 'Fine Art' },
+            { value: 'Performing Arts', label: 'Performing Arts' },
+            { value: 'Photography', label: 'Photography' },
+            { value: 'Biotechnology', label: 'Biotechnology' },
+            { value: 'Mental Healthcare', label: 'Mental Healthcare' },
+            { value: 'Veterinary', label: 'Veterinary' },
+            { value: 'Computer Hardware', label: 'Computer Hardware' },
+            { value: 'Computer Networking', label: 'Computer Networking' },
+            { value: 'Semiconductors', label: 'Semiconductors' },
+            { value: 'Telecommunications', label: 'Telecommunications' },
+            { value: 'Wireless', label: 'Wireless' },
+            { value: 'Commercial Real Estate', label: 'Commercial Real Estate' },
+            { value: 'Alternative Dispute Resolution', label: 'Alternative Dispute Resolution' },
+            { value: 'Law Practice', label: 'Law Practice' },
+            { value: 'Legal Services', label: 'Legal Services' },
+            { value: 'Apparel & Fashion', label: 'Apparel & Fashion' },
+            { value: 'Consumer Electronics', label: 'Consumer Electronics' },
+            { value: 'Consumer Services', label: 'Consumer Services' },
+            { value: 'Cosmetics', label: 'Cosmetics' },
+            { value: 'Furniture', label: 'Furniture' },
+            { value: 'Luxury Goods & Jewelry', label: 'Luxury Goods & Jewelry' },
+            { value: 'Sporting Goods', label: 'Sporting Goods' },
+            { value: 'Tobacco', label: 'Tobacco' },
+            { value: 'Wine and Spirits', label: 'Wine and Spirits' },
+            { value: 'Dairy', label: 'Dairy' },
+            { value: 'Farming', label: 'Farming' },
+            { value: 'Fishery', label: 'Fishery' },
+            { value: 'Ranching', label: 'Ranching' },
+            { value: 'Newspapers', label: 'Newspapers' },
+            { value: 'Online Media', label: 'Online Media' },
+            { value: 'Printing', label: 'Printing' },
+            { value: 'Public Relations & Communications', label: 'Public Relations & Communications' },
+            { value: 'Publishing', label: 'Publishing' },
+            { value: 'Translation & Localization', label: 'Translation & Localization' },
+            { value: 'Writing & Editing', label: 'Writing & Editing' },
+            { value: 'Civic & Social Organization', label: 'Civic & Social Organization' },
+            { value: 'Fundraising', label: 'Fundraising' },
+            { value: 'Libraries', label: 'Libraries' },
+            { value: 'Museums & Institutions', label: 'Museums & Institutions' },
+            { value: 'Non-Profit Organization Management', label: 'Non-Profit Organization Management' },
+            { value: 'Philanthropy', label: 'Philanthropy' },
+            { value: 'Program Development', label: 'Program Development' },
+            { value: 'Religious Institutions', label: 'Religious Institutions' },
+            { value: 'Think Tanks', label: 'Think Tanks' },
+            { value: 'Computer & Network Security', label: 'Computer & Network Security' },
+            { value: 'Information Technology & Services', label: 'Information Technology & Services' },
+            { value: 'Import & Export', label: 'Import & Export' },
+            { value: 'Maritime', label: 'Maritime' },
+            { value: 'Package/Freight Delivery', label: 'Package/Freight Delivery' },
+            { value: 'Transportation/Trucking/Railroad', label: 'Transportation/Trucking/Railroad' },
+            { value: 'Warehousing', label: 'Warehousing' },
+            { value: 'Animation', label: 'Animation' },
+            { value: 'Broadcast Media', label: 'Broadcast Media' },
+            { value: 'Computer Games', label: 'Computer Games' },
+            { value: 'Entertainment', label: 'Entertainment' },
+            { value: 'Media Production', label: 'Media Production' },
+            { value: 'Mobile Games', label: 'Mobile Games' },
+            { value: 'Motion Pictures & Film', label: 'Motion Pictures & Film' },
+            { value: 'Music', label: 'Music' },
+            { value: 'Alternative Medicine', label: 'Alternative Medicine' },
+            { value: 'Law Enforcement', label: 'Law Enforcement' },
+            { value: 'Public Safety', label: 'Public Safety' },
+            { value: 'Government Administration', label: 'Government Administration' },
+            { value: 'Government Relations', label: 'Government Relations' },
+            { value: 'International Affairs', label: 'International Affairs' },
+            { value: 'Judiciary', label: 'Judiciary' },
+            { value: 'Legislative Office', label: 'Legislative Office' },
+            { value: 'Political Organization', label: 'Political Organization' },
+            { value: 'Public Policy', label: 'Public Policy' },
+            { value: 'Information and Internet', label: 'Information and Internet' },
+            { value: 'Defense and Space Manufacturing', label: 'Defense and Space Manufacturing' },
+            { value: 'Civic and Social Organizations', label: 'Civic and Social Organizations' },
+            { value: 'Marine Transport', label: 'Marine Transport' },
+            { value: 'Public Relations and Communications Services', label: 'Public Relations and Communications Services' },
+            { value: 'Online Audio and Video Media', label: 'Online Audio and Video Media' },
+            { value: 'Research Services', label: 'Research Services' },
+            { value: 'IT Services and IT Consulting', label: 'IT Services and IT Consulting' },
+            { value: 'Food and Beverage Retail', label: 'Food and Beverage Retail' }
+        ],
       industryOptions: [
             { value: '3D printing', label: '3D printing' },
             { value: 'AdTech', label: 'AdTech' },
@@ -1195,6 +1372,7 @@ export default {
             { value: 'Wearables and quantified self', label: 'Wearables and quantified self' },
             { value: 'Other', label: 'Other' }
         ],
+
       businessModelOptions: [
         { key: 'A', value: 'B2B', label: 'B2B' },
         { key: 'B', value: 'B2C', label: 'B2C / D2C' },
@@ -1250,6 +1428,7 @@ export default {
         first_name: '',
         last_name: '',
         email: '',
+        phone_number: '',
         relationship: '',
         other_relationship: '',
         working_full_time: '',
@@ -1267,6 +1446,7 @@ export default {
         active_customers: '',
         how_many_users: '',
         industry: [],
+        liberty_ventures_industry: '',
         other_industry: '',
         product: [],
         other_product: '',
@@ -1302,6 +1482,7 @@ export default {
         pitching_live: '',
         share_submission: '',
         want_us_to_know: '',
+        value_of_team: '',
       },
       successMessage: '',
       errorMessage: ''
@@ -1405,7 +1586,7 @@ export default {
       this.formData.pitch_deck_file = file;
     },
     nextStep() {
-      if (this.currentStep < 48) {
+      if (this.currentStep < 51) {
         this.currentStep++;
         this.scrollToCurrentStep();
         if (this.currentStep !== 1) {
