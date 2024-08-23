@@ -1001,6 +1001,17 @@
       <div v-if="currentStep === 42">
         <div class="header-container">
           <p class="step-indicator">c.</p>
+          <h2>What's your company's LinkedIn?</h2>
+        </div>
+        <input class="input-field" type="url" placeholder="Company's LinkedIn" v-model="formData.company_linkedin" />
+        <div class="button-container">
+          <button class="button" @click="nextStep">Next</button>
+          <p class="enter-text">press Enter ↵</p>
+        </div>
+      </div>
+      <div v-if="currentStep === 43">
+        <div class="header-container">
+          <p class="step-indicator">c.</p>
           <h2>Founder LinkedIn</h2>
         </div>
         <input class="input-field" type="url" placeholder="CEO LinkedIn profile" v-model="formData.ceo_linkedin" />
@@ -1009,7 +1020,7 @@
           <p class="enter-text">press Enter ↵</p>
         </div>
       </div>
-      <div v-if="currentStep === 43">
+      <div v-if="currentStep === 44">
         <div class="header-container">
           <p class="step-indicator">d.</p>
           <h2>CTO LinkedIn</h2>
@@ -1473,6 +1484,7 @@ export default {
         capital_to_raise: '',
         prev_experience: '',
         team_description: '',
+        company_linkedin: '',
         ceo_linkedin: '',
         cto_linkedin: '',
         linkedin_profiles: '',
@@ -1853,16 +1865,18 @@ button:focus {
 .custom-radio {
   display: flex;
   align-items: center;
-  background-color: #f3f3f3;
+  background-color: #ffffff; /* Цвет фона по умолчанию — белый */
   padding: 4px 8px;
-  border: 2px solid #ccc;
+  border: 2px solid transparent; /* Убираем рамку */
   cursor: pointer;
   position: relative;
   width: 100%;
+  transition: background-color 0.3s, border-color 0.3s; /* Плавные переходы */
 }
 
 .custom-radio:hover {
-  background-color: #acacac; /* Цвет при наведении мыши */
+  background-color: #808080; /* Цвет при наведении мыши */
+  border-color: #000; /* Цвет рамки при наведении */
 }
 
 .custom-radio input[type="radio"] {
@@ -1936,33 +1950,36 @@ button:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 18px; /* Уменьшили размер ключа */
-  height: 18px; /* Уменьшили размер ключа */
-  background-color: #fff;
+  width: 18px;
+  height: 18px;
+  background-color: #fff; /* Белый цвет ключа по умолчанию */
   margin-right: 10px;
   font-weight: bold;
-  font-size: 12px; /* Уменьшили размер шрифта */
+  font-size: 12px;
   color: #000;
 }
 
+
 .custom-radio input[type="radio"]:checked + .radio-button {
-  background-color: #ffffff;
-  border-color: #000;
+  background-color: #808080; /* Серый цвет при выборе */
+  border-color: transparent !important; /* Убираем рамку при выборе */
+  color: #ffffff; /* Белый текст при выборе */
 }
 
 .custom-radio input[type="radio"]:checked + .radio-button .radio-key {
-  background-color: #ff538c;
-  color: #fff;
-  border-color: #ff538c;
+  background-color: #000000; /* Темный фон ключа */
+  color: #ffffff; /* Белый текст для ключа */
+}
+
+.custom-radio input[type="radio"]:checked + .radio-button .checkmark {
+  display: inline; /* Показываем галочку */
+  color: #ffffff; /* Белая галочка */
+  margin-left: auto;
 }
 .checkmark {
   display: none;
   margin-left: auto;
   color: #000;
-}
-
-.custom-radio input[type="radio"]:checked + .radio-button .checkmark {
-  display: inline;
 }
 
 .fade-enter-active, .fade-leave-active {
