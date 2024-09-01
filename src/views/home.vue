@@ -89,10 +89,30 @@
         </p>
       </div>
       <div class="home-buttons">
-        <router-link to="/send-form" class="button">Find Investors Now</router-link>
-        <button class="home-learn button-clean button">See Investor List</button>
-      </div>
-    </section>
+      <router-link to="/send-form" class="button">Find Investors Now</router-link>
+      <button @click="openModal" class="home-learn button-clean button">See Investor List</button>
+    </div>
+  </section>
+
+  <!-- Модальное окно -->
+  <div v-if="isModalOpen" class="modal" @click="outsideClick">
+    <div class="modal-content">
+      <span class="close" @click="closeModal">&times;</span>
+      <h2 class="modal-header">Investors List</h2>
+      <ul class="investor-list">
+      <li><a href="https://precursorvc.com/" target="_blank" class="button-link-scrollable">Precursor Ventures</a></li>
+      <li><a href="https://www.path.vc/" target="_blank" class="button-link-scrollable">Path Ventures</a></li>
+      <li><a href="https://www.2048.vc/" target="_blank" class="button-link-scrollable">2048 Ventures</a></li>
+      <li><a href="https://www.boost.vc/" target="_blank" class="button-link-scrollable">Boost Ventures</a></li>
+      <li><a href="https://everywhere.vc/" target="_blank" class="button-link-scrollable">Everywhere Ventures</a></li>
+      <li><a href="https://www.wischoff.com/" target="_blank" class="button-link-scrollable">Wischoff Ventures</a></li>
+      <li><a href="https://incisive.vc/" target="_blank" class="button-link-scrollable">Incisive Ventures</a></li>
+      <li><a href="https://www.hustlefund.vc/" target="_blank" class="button-link-scrollable">Hustle Fund</a></li>
+      <li><a href="https://libertyventures.xyz/" target="_blank" class="button-link-scrollable">Liberty Ventures</a></li>
+      <li><a href="https://www.spatial.capital/" target="_blank" class="button-link-scrollable">Spatial Capital</a></li>
+      </ul>
+    </div>
+  </div>
     <section class="home-description">
       <img alt="image" src="/hero-divider-1500w.png" class="home-divider-image" />
       <!-- <div class="home-container3">
@@ -832,6 +852,20 @@ export default {
       rawwfnp: ' ',
       rawwvf2: ' ',
       rawo84v: ' ',
+      isModalOpen: false, // для управления состоянием модального окна
+    }
+  },
+  methods: {
+    openModal() {
+      this.isModalOpen = true;
+    },
+    closeModal() {
+      this.isModalOpen = false;
+    },
+    outsideClick(event) {
+      if (event.target.classList.contains('modal')) {
+        this.isModalOpen = false;
+      }
     }
   },
   metaInfo: {
@@ -844,9 +878,93 @@ export default {
     ],
   },
 }
+
 </script>
 
 <style scoped>
+/* Стили для модального окна */
+.modal {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Полупрозрачный черный фон */
+}
+
+.modal-content {
+  background-color: #282828; /* Темный фон для модального окна */
+  margin: 15% auto;
+  padding: 20px;
+  border: 2px solid #888;
+  width: 80%;
+  max-width: 600px;
+  color: #fff;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden; /* Добавлено для прокрутки */
+}
+
+.close {
+  color: #fff;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  transition: color 0.3s ease; /* Плавный переход цвета за 0.3 секунды */
+}
+
+.close:hover,
+.close:focus {
+  color: #707070; /* Тёмно-серый цвет */
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Новый стиль для заголовка, аналогичный логотипу */
+.modal-header {
+  color: #ff538c;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 600;
+  text-shadow: 1px 1px 0 #000, 2px 2px 0 #000000, 3px 3px 0 #000000;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.investor-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  max-height: 300px; /* Ограничиваем высоту списка */
+  overflow-y: auto; /* Добавляем вертикальную прокрутку */
+}
+
+.investor-list li {
+  padding: 6px 0;
+  border-bottom: 1px solid #444;
+}
+
+.investor-list li:last-child {
+  border-bottom: none;
+}
+
+
+/* Стили для кнопок-ссылок */
+.button-link-scrollable {
+  display: block;
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 10px;
+  transition: background-color 0.3s ease;
+  text-decoration: underline; /* Добавляем подчеркивание */
+}
+
+.button-link-scrollable:hover {
+  background-color: #444; /* Затемнение фона при наведении */
+}
+
 .home-container {
   width: 100%;
   display: flex;
