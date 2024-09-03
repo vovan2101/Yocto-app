@@ -220,6 +220,7 @@
         { name: 'Wischoff Ventures', status: 'Optional', url: 'https://www.wischoff.com/' },
         { name: 'Liberty Ventures', status: 'Required', url: 'https://libertyventures.xyz/' },
         { name: 'Everywhere Ventures', status: 'Optional', url: 'https://everywhere.vc/' },
+        { name: 'Hustle Fund', status: 'Optional', url: 'https://www.hustlefund.vc/' },
       ],
       linkedin_profiles: [
         { name: 'Ventures 2048', status: 'Optional', url: 'https://www.2048.vc/' },

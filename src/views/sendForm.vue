@@ -2307,7 +2307,7 @@ export default {
           formData.append(key, this.formData[key]);
         }
 
-        const response = await fetch('http://localhost:3002/send-forms', {
+        const response = await fetch('http://localhost/api/send-forms', {
           method: 'POST',
           body: formData
         });
