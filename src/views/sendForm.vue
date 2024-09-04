@@ -350,7 +350,6 @@
             </div>
           </div>
 
-
           <!-- Step 15 -->
           <div v-if="currentStep === 15">
             <div class="header-container">
@@ -1007,14 +1006,23 @@
                 </span>
               </label>
               <label class="custom-radio">
-                <input type="radio" value="Other" v-model="formData.customers_based" />
-                <span class="radio-button">
-                  <span class="radio-key">N</span> Other
-                  <span class="checkmark">&#10003;</span>
-                </span>
-              </label>
-            </div>
-            </div>
+        <input type="radio" value="Other" v-model="formData.customers_based" @change="handleCustomersBasedChange" />
+        <span class="radio-button">
+          <span class="radio-key">N</span> Other
+          <span class="checkmark">&#10003;</span>
+        </span>
+      </label>
+    </div>
+  </div>
+  <!-- Появляется поле для ввода, если выбрано 'Other' -->
+  <div v-if="formData.customers_based === 'Other'" class="other-product-input">
+    <input 
+      class="input-field" 
+      v-model="formData.other_customers_based" 
+      placeholder="Please specify" 
+      required 
+    />
+  </div>
             <div class="button-container">
               <button class="button" @click="nextStep">Next</button>
               <p class="enter-text">press Enter ↵</p>
@@ -2109,6 +2117,7 @@ export default {
         headquartered: '',
         is_delaware_corp: '',
         customers_based: '',
+        other_customers_based: '',
         specific_location: '',
         other_specific_location: '',
         legal_structure: '',
@@ -2145,6 +2154,12 @@ export default {
     };
   },
   methods: {
+    handleCustomersBasedChange() {
+    // Если значение 'Other' не выбрано, сбрасываем значение поля other_customers_based
+    if (this.formData.customers_based !== 'Other') {
+      this.formData.other_customers_based = '';
+    }
+  },
     goToFirstStep() {
       this.currentStep = 1; // Переход к первому шагу
     },
